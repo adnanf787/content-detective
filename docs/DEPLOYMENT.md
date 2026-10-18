@@ -2,6 +2,8 @@
 
 The current hosted application uses a Next.js interface in `web/` and a stateless FastAPI service in `api/index.py`. The API reuses the same `src/` cleaning, measurement, NLP cue, recommendation, and export code as the Streamlit assignment. `app.py` remains a local Streamlit entry point.
 
+**Live public URL:** https://web-two-orpin-90.vercel.app. Verified on October 18, 2026 with the new UI and the 30-video / 279-comment snapshot. The original `web-adnan787.vercel.app` alias also points to the new deployment, with its existing Vercel login protection. No protection settings were disabled.
+
 ## Existing Vercel project
 
 1. Sign in to the Vercel account that owns the site you want to replace (the supplied site was `web-adnan787.vercel.app`). Verify the project and domain before changing it; the old local CLI link names a separate project, `reelscope`.

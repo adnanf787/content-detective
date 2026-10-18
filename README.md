@@ -2,6 +2,8 @@
 
 A student digital-marketing investigation: **What type of social-media content gets Pakistani audiences to engage?**
 
+**[Open the live dashboard](https://web-two-orpin-90.vercel.app)** · [GitHub source](https://github.com/adnanf787/content-detective)
+
 The current project has a Python/Streamlit assignment dashboard (`app.py`) and a matching Next.js web dashboard (`web/`) for Vercel. Both use the same Python analysis through `src/`; the web API entry point is `api/index.py`. Current work is **YouTube only**, with shared analysis, evidence exports, and a five-section research workflow. Instagram is deferred; its offline CSV validator remains in the codebase. The earlier ReelScope interface is no longer the web homepage.
 
 **Current web interface:** [run the Next.js dashboard](web/README.md) · [deploy on Vercel](docs/DEPLOYMENT.md) · [feature guide](docs/FEATURE_GUIDE.md).

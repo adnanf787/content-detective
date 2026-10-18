@@ -2,6 +2,8 @@
 
 The current Pakistan telecom YouTube research dashboard. This is the Next.js interface for the same Python analysis used by the root Streamlit assignment. The default page no longer opens the earlier ReelScope interface.
 
+**Live dashboard: https://web-two-orpin-90.vercel.app**. The existing `web-adnan787.vercel.app` alias also serves this deployment but requires the existing Vercel login.
+
 ## Run locally
 
 Use Python 3.12 and Node.js 22+ (Node 24 verified). From the repository root:
