@@ -13,7 +13,11 @@ node_modules/
 web/.env*
 web/tsconfig.tsbuildinfo
 data/raw/*/
-data/processed/
+# Include only the validated public pilot needed by the hosted dashboard.
+data/processed/*
+!data/processed/youtube_posts.csv
+!data/processed/youtube_comments.csv
+!data/processed/youtube_collection_report.json
 data/detective.sqlite*
 docs/stitch/project.json
 docs/stitch/generation.json

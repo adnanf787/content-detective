@@ -37,7 +37,13 @@ python -m streamlit run app.py
 
 For the configured workspace, use `.venv/bin/python -m streamlit run app.py`. On Windows, activate `.venv\Scripts\Activate.ps1` instead.
 
-Open the local URL, usually http://127.0.0.1:8501. The validated saved YouTube pilot loads automatically. Saved-data analysis needs no network or key. **Filter sample** controls brands, the measure, dates, video ages, and minimum group size. `data/processed/` and raw snapshots are intentionally Git-ignored; transfer them separately when moving the project. Without saved data, the app offers collection or documented CSV import. Synthetic imports stay explicitly labeled.
+Open the local URL, usually http://127.0.0.1:8501. The validated saved YouTube pilot loads automatically. Saved-data analysis needs no network or key. **Filter sample** controls brands, the measure, dates, video ages, and minimum group size. Three validated public-pilot files in `data/processed/` are included for deployment; raw snapshots, other generated outputs, credentials, and the local database stay Git-ignored. Without saved data, the app offers collection or documented CSV import. Synthetic imports stay explicitly labeled.
+
+## Publish the current dashboard
+
+Deploy this repository's **`app.py`** on Streamlit Community Cloud, using branch **`main`** and Python **3.12**. The root `requirements.txt` supplies the dependencies, and the included public pilot loads without an API key. See [deployment instructions](docs/DEPLOYMENT.md).
+
+The Vercel project rooted at **`web/`** serves the earlier ReelScope app. Its Next.js build does not run the Python dashboard. Pushing dashboard changes to GitHub or rebuilding `web/` does not replace ReelScope with this dashboard.
 
 ## Reproduce acquisition
 
