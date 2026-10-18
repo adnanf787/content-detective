@@ -2,6 +2,12 @@
 
 The research question is: **What type of social-media content gets Pakistani audiences to engage?** The current project investigates official Pakistan telecom brands on YouTube. It uses 30 real videos, 10 each from Jazz, Zong, and Ufone, plus 279 sampled public top-level comments collected on October 18, 2026. Brand location does not prove the viewers' nationality.
 
+## Web appearance and shortcuts
+
+The web dashboard starts in a soft slate **Dusk** theme, with subtle emerald/teal gradients and floating study banners. The sun/moon button in the top bar switches between Dusk and Light and remembers the choice in this browser. Reduced-motion preferences disable the decorative animation.
+
+Select a brand name in the Overview engagement chart to focus the sample on that brand. **All brands** restores the brand selection while retaining the other filters. Tabs support Left/Right arrow keys and Home/End; Escape closes a dialog or the mobile navigation.
+
 ## What is real data, a calculation, or a rule?
 
 - **Real observations:** video IDs, titles/descriptions, publishing dates, source links, available likes, total comment counts, views, channel subscriber snapshots, and sampled comment text come from official YouTube API responses.

@@ -25,6 +25,8 @@ import {
   X,
   BookOpen,
   ArrowsClockwise,
+  Sun,
+  Moon,
 } from "@phosphor-icons/react";
 import {
   DEFAULT_FILTERS,
@@ -184,12 +186,16 @@ function BarChart({
   value,
   suffix = "",
   count = "n",
+  onSelect,
+  selectDisabled,
 }: {
   rows: Row[];
   name: string;
   value: string;
   suffix?: string;
   count?: string;
+  onSelect?: (name: string) => void;
+  selectDisabled?: boolean;
 }) {
   const max = Math.max(...rows.map((row) => Number(row[value]) || 0), 1);
   if (!rows.length)
@@ -204,7 +210,20 @@ function BarChart({
             <span
               className={`brand-dot brand-${String(row[name]).toLowerCase()}`}
             />
-            <strong>{String(row[name] ?? "Unknown")}</strong>
+            {onSelect ? (
+              <button
+                className="bar-select"
+                disabled={selectDisabled}
+                onClick={() => onSelect(String(row[name]))}
+                title={`Filter to ${row[name]}`}
+                aria-label={`Show only ${row[name]}`}
+              >
+                {String(row[name] ?? "Unknown")}
+                <Funnel size={12} />
+              </button>
+            ) : (
+              <strong>{String(row[name] ?? "Unknown")}</strong>
+            )}
             <small>n={number(row[count], 0)}</small>
             <b>
               {number(row[value], 2)}
@@ -239,7 +258,27 @@ function Tabs({
           key={option}
           role="tab"
           aria-selected={option === value}
+          tabIndex={option === value ? 0 : -1}
           onClick={() => onChange(option)}
+          onKeyDown={(event) => {
+            const index = options.indexOf(option);
+            const next =
+              event.key === "ArrowRight"
+                ? (index + 1) % options.length
+                : event.key === "ArrowLeft"
+                  ? (index - 1 + options.length) % options.length
+                  : event.key === "Home"
+                    ? 0
+                    : event.key === "End"
+                      ? options.length - 1
+                      : null;
+            if (next === null) return;
+            event.preventDefault();
+            onChange(options[next]);
+            event.currentTarget.parentElement
+              ?.querySelectorAll<HTMLButtonElement>("button")
+              [next]?.focus();
+          }}
         >
           {option}
         </button>
@@ -412,7 +451,7 @@ function TimingHeatmap({ rows, mode }: { rows: Row[]; mode: string }) {
                   key={hour}
                   style={{
                     backgroundColor: cell
-                      ? `rgba(4,120,87,${0.12 + ((Number(value) || 0) / max) * 0.48})`
+                      ? `rgba(var(--heatmap-rgb, 4, 120, 87),${0.12 + ((Number(value) || 0) / max) * 0.3})`
                       : undefined,
                   }}
                   title={`${day}, ${String(hour).padStart(2, "0")}:00 Asia/Karachi · ${cell ? `${cell.videos} videos, n=${cell.n}, median=${number(cell.median, 2)}` : "no eligible observations"}`}
@@ -434,6 +473,7 @@ function TimingHeatmap({ rows, mode }: { rows: Row[]; mode: string }) {
 }
 
 export default function Dashboard() {
+  const [theme, setTheme] = useState<"dusk" | "light">("dusk");
   const [page, setPage] = useState<Page>("Overview");
   const [study, setStudy] = useState<Study | null>(null);
   const [workspace, setWorkspace] = useState<Workspace | null>(null);
@@ -531,6 +571,26 @@ export default function Dashboard() {
     void load();
   }, []); // The saved snapshot is fetched once per browser visit.
   useEffect(() => {
+    try {
+      if (localStorage.getItem("content-detective-theme") === "light") {
+        setTheme("light");
+        document.documentElement.dataset.theme = "light";
+      }
+    } catch {
+      /* Theme switching still works when browser storage is unavailable. */
+    }
+  }, []);
+  function toggleTheme() {
+    const next = theme === "dusk" ? "light" : "dusk";
+    setTheme(next);
+    document.documentElement.dataset.theme = next;
+    try {
+      localStorage.setItem("content-detective-theme", next);
+    } catch {
+      /* Optional preference storage. */
+    }
+  }
+  useEffect(() => {
     const handler = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setFilterOpen(false);
@@ -627,6 +687,7 @@ export default function Dashboard() {
         />
       )}
       <aside
+        id="research-navigation"
         className={`research-sidebar ${menuOpen ? "open" : ""}`}
         aria-label="Main navigation"
       >
@@ -717,12 +778,24 @@ export default function Dashboard() {
               className="mobile-menu"
               onClick={() => setMenuOpen(!menuOpen)}
               aria-label="Open navigation"
+              aria-expanded={menuOpen}
+              aria-controls="research-navigation"
             >
               <List size={22} />
             </button>
             <span>PakTelco Analytical Observational Workbench</span>
           </div>
           <div className="masthead-right">
+            <button
+              className="theme-toggle"
+              onClick={toggleTheme}
+              aria-label={`Use ${theme === "dusk" ? "light" : "dusk"} theme`}
+              aria-pressed={theme === "dusk"}
+              title={`Switch to ${theme === "dusk" ? "light" : "dusk"} theme`}
+            >
+              {theme === "dusk" ? <Sun size={16} /> : <Moon size={16} />}
+              <span>{theme === "dusk" ? "Dusk" : "Light"}</span>
+            </button>
             <span className="verified-label">
               <ShieldCheck size={15} />
               Official YouTube API sources
@@ -934,10 +1007,22 @@ export default function Dashboard() {
                             rows={table("brands")}
                             name="brand"
                             value="median"
+                            selectDisabled={!!busy}
+                            onSelect={(brand) =>
+                              void task(`Focusing on ${brand}…`, async () => {
+                                accept(
+                                  await request<Study>("analyze", {
+                                    workspace,
+                                    filters: { ...filters, brands: [brand] },
+                                  }),
+                                );
+                              })
+                            }
                           />
                           <div className="chart-footnote">
                             Bars show observed medians. Account size, video age,
-                            campaigns, and promotion may explain differences.
+                            campaigns, and promotion may explain differences.{" "}
+                            Select a brand name to focus the sample.
                           </div>
                           <Disclosure title="Compare distributions and video ages">
                             <DistributionPlot
@@ -991,6 +1076,29 @@ export default function Dashboard() {
                               </div>
                             </div>
                           ))}
+                          {filters.brands.length !==
+                            study.available_brands.length && (
+                            <button
+                              className="reset-brands"
+                              disabled={!!busy}
+                              onClick={() =>
+                                void task("Restoring all brands…", async () => {
+                                  accept(
+                                    await request<Study>("analyze", {
+                                      workspace,
+                                      filters: {
+                                        ...filters,
+                                        brands: study.available_brands,
+                                      },
+                                    }),
+                                  );
+                                })
+                              }
+                            >
+                              <ArrowsClockwise size={12} />
+                              All brands
+                            </button>
+                          )}
                         </Panel>
                       </div>
                       {study.summary.brands > 1 &&
