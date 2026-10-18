@@ -1,0 +1,12 @@
+{
+  "file_name": "sample_synthetic_posts.csv",
+  "source_name": "Fixed-seed demo generator",
+  "source_type": "synthetic",
+  "status": "synthetic",
+  "collected_on": "",
+  "geographic_relevance": "Fictional Pakistan-market scenario; no verified audience",
+  "license_notes": "Generated project fixture; not scraped from platforms",
+  "source_timezone": "Asia/Karachi",
+  "audience_evidence": "",
+  "notes": "Seed 42. All 180 observations and accounts are invented."
+}

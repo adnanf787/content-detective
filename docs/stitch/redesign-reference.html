@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+
+<html class="h-full bg-[#f8fafc]" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pakistani Social Media Content Detective — Research Workbench</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-tertiary-fixed": "#001d31",
+            "on-tertiary": "#ffffff",
+            "secondary-fixed-dim": "#8bd6b6",
+            "on-background": "#0f172a",
+            "on-surface": "#0f172a",
+            "on-error-container": "#93000a",
+            "surface-container": "#f1f5f9",
+            "on-primary": "#ffffff",
+            "on-primary-container": "#9ffdd3",
+            "tertiary-fixed-dim": "#93ccff",
+            "surface-container-high": "#e2e8f0",
+            "error": "#e11d48",
+            "on-primary-fixed-variant": "#00513a",
+            "surface-container-highest": "#cbd5e1",
+            "surface-container-low": "#f8fafc",
+            "surface-tint": "#059669",
+            "secondary-fixed": "#a6f2d1",
+            "on-error": "#ffffff",
+            "on-primary-fixed": "#002115",
+            "primary-container": "#059669",
+            "surface-bright": "#ffffff",
+            "outline": "#64748b",
+            "surface-variant": "#e2e8f0",
+            "on-secondary-container": "#047857",
+            "on-surface-variant": "#475569",
+            "surface": "#f8fafc",
+            "tertiary-container": "#0284c7",
+            "primary-fixed-dim": "#6ee7b7",
+            "inverse-primary": "#6ee7b7",
+            "background": "#f8fafc",
+            "on-secondary-fixed-variant": "#00513b",
+            "inverse-surface": "#1e293b",
+            "error-container": "#ffe4e6",
+            "inverse-on-surface": "#f8fafc",
+            "on-secondary-fixed": "#002116",
+            "surface-dim": "#e2e8f0",
+            "tertiary": "#0369a1",
+            "on-tertiary-fixed-variant": "#004b73",
+            "outline-variant": "#e2e8f0",
+            "secondary-container": "#d1fae5",
+            "tertiary-fixed": "#cce5ff",
+            "on-secondary": "#ffffff",
+            "on-tertiary-container": "#dbecff",
+            "secondary": "#0d9488",
+            "primary": "#047857",
+            "surface-container-lowest": "#ffffff",
+            "primary-fixed": "#a7f3d0"
+          },
+          borderRadius: {
+            "DEFAULT": "0.375rem",
+            "lg": "0.625rem",
+            "xl": "0.875rem",
+            "2xl": "1.125rem",
+            "full": "9999px"
+          },
+          fontFamily: {
+            sans: ["'Plus Jakarta Sans'", "sans-serif"],
+            mono: ["'JetBrains Mono'", "monospace"],
+            "label-badge": ["'Plus Jakarta Sans'", "sans-serif"],
+            "body-lg": ["'Plus Jakarta Sans'", "sans-serif"],
+            "headline-lg": ["'Plus Jakarta Sans'", "sans-serif"],
+            "body-sm": ["'Plus Jakarta Sans'", "sans-serif"],
+            "headline-xl-mobile": ["'Plus Jakarta Sans'", "sans-serif"],
+            "label-code": ["'JetBrains Mono'", "monospace"],
+            "body-md": ["'Plus Jakarta Sans'", "sans-serif"],
+            "headline-xl": ["'Plus Jakarta Sans'", "sans-serif"],
+            "headline-md": ["'Plus Jakarta Sans'", "sans-serif"]
+          }
+        }
+      }
+    }
+</script>
+<style>
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 20px;
+      line-height: 1;
+      display: inline-block;
+      text-transform: none;
+      letter-spacing: normal;
+      word-wrap: normal;
+      white-space: nowrap;
+      direction: ltr;
+      -webkit-font-smoothing: antialiased;
+      vertical-align: middle;
+    }
+    body {
+      color: #0f172a;
+      background-color: #f8fafc;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .tabular-nums {
+      font-variant-numeric: tabular-nums;
+    }
+    /* Elegant Subtle Glass & Gradient Accent Utilities */
+    .hero-mesh-gradient {
+      background: radial-gradient(120% 120% at 0% 0%, rgba(16, 185, 129, 0.08) 0%, rgba(20, 184, 166, 0.04) 40%, rgba(255, 255, 255, 0.95) 100%),
+                  linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    }
+    .kpi-card {
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 1px;
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.18), rgba(226, 232, 240, 0.8), rgba(13, 148, 136, 0.1));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+    .kpi-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+    }
+    .stat-progress-bar {
+      transition: width 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .toast-animate {
+      animation: toastSlide 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes toastSlide {
+      from { transform: translateY(16px) scale(0.96); opacity: 0; }
+      to { transform: translateY(0) scale(1); opacity: 1; }
+    }
+    /* Tooltip styling */
+    [data-tooltip] {
+      position: relative;
+    }
+    [data-tooltip]:hover::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: calc(100% + 6px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: #0f172a;
+      color: #f8fafc;
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 4px 8px;
+      border-radius: 6px;
+      white-space: nowrap;
+      z-index: 50;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      pointer-events: none;
+      animation: fadeIn 0.15s ease-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translate(-50%, 4px); }
+      to { opacity: 1; transform: translate(-50%, 0); }
+    }
+</head>
+<body class="h-full flex flex-row overflow-hidden bg-[#f8fafc] antialiased text-[#0f172a]">
+
+<!-- Toast Notification Container -->
+<div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+<!-- SIDEBAR NAVIGATION RAIL (Shared Component: SideNavBar) -->
+<aside class="fixed top-0 left-0 h-full z-40 flex flex-col justify-between p-4 w-64 md:w-80 bg-white border-r border-slate-200 shadow-sm transition-all">
+<div class="flex flex-col gap-5">
+  <!-- Wordmark & Study Crest -->
+  <div class="px-2 pt-2">
+    <div class="flex items-center gap-2 mb-1.5">
+      <span class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-gradient-to-br from-emerald-600 to-teal-700 text-white shadow-sm shadow-emerald-500/20">
+        <span class="material-symbols-outlined text-[17px]">database</span>
+      </span>
+      <span class="text-base font-bold text-slate-900 tracking-tight">PTCL &amp; Telco Corpus</span>
+    </div>
+    <div class="text-xs text-slate-600 font-semibold tracking-wide uppercase text-[11px]">Content Detective</div>
+    <div class="text-[0.6875rem] text-slate-400 font-mono mt-1 leading-tight">Pakistani Social Media Content Detective · Pakistan Telecom YouTube Study</div>
+    
+    <div class="mt-2.5 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gradient-to-r from-emerald-50 via-teal-50 to-emerald-50 border border-emerald-200/70 text-emerald-800 text-[11px] font-semibold tracking-wide">
+      <span class="relative flex h-2 w-2">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-600"></span>
+      </span>
+      Verified YouTube Ingest
+    </div>
+  </div>
+
+  <!-- Navigation Destinations (Interactive Sidebar) -->
+  <nav id="sidebar-nav" class="flex flex-col gap-1.5 mt-1">
+    <!-- Tab 1: Overview (ACTIVE) -->
+    <a data-tab="overview" class="sidebar-item flex items-center justify-between px-3 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500/10 via-teal-500/10 to-transparent text-emerald-900 font-semibold border-l-4 border-emerald-600 shadow-sm transition-all duration-150 cursor-pointer" href="#overview">
+      <div class="flex items-center gap-3">
+        <span class="material-symbols-outlined text-emerald-700 text-[20px]" style="font-variation-settings: 'FILL' 1;">analytics</span>
+        <span class="text-sm font-semibold">Overview</span>
+      </div>
+      <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+    </a>
+    <!-- Tab 2: Content (INACTIVE) -->
+    <a data-tab="content" class="sidebar-item flex items-center justify-between px-3 py-2.5 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100/70 transition-all duration-150 cursor-pointer" href="#content">
+      <div class="flex items-center gap-3">
+        <span class="material-symbols-outlined text-[20px] text-slate-500">video_library</span>
+        <span class="text-sm font-medium">Content</span>
+      </div>
+      <span class="px-1.5 py-0.5 text-[10px] font-mono rounded bg-slate-100 text-slate-500">30</span>
+    </a>
+    <!-- Tab 3: Comments (INACTIVE) -->
+    <a data-tab="comments" class="sidebar-item flex items-center justify-between px-3 py-2.5 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100/70 transition-all duration-150 cursor-pointer" href="#comments">
+      <div class="flex items-center gap-3">
+        <span class="material-symbols-outlined text-[20px] text-slate-500">forum</span>
+        <span class="text-sm font-medium">Comments</span>
+      </div>
+      <span class="px-1.5 py-0.5 text-[10px] font-mono rounded bg-slate-100 text-slate-500">279</span>
+    </a>
+    <!-- Tab 4: Recommendations (INACTIVE) -->
+    <a data-tab="recommendations" class="sidebar-item flex items-center justify-between px-3 py-2.5 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100/70 transition-all duration-150 cursor-pointer" href="#recommendations">
+      <div class="flex items-center gap-3">
+        <span class="material-symbols-outlined text-[20px] text-slate-500">insights</span>
+        <span class="text-sm font-medium">Recommendations</span>
+      </div>
+    </a>
+    <!-- Tab 5: Data & methods (INACTIVE) -->
+    <a data-tab="methods" class="sidebar-item flex items-center justify-between px-3 py-2.5 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100/70 transition-all duration-150 cursor-pointer" href="#methods">
+      <div class="flex items-center gap-3">
+        <span class="material-symbols-outlined text-[20px] text-slate-500">database</span>
+        <span class="text-sm font-medium">Data &amp; methods</span>
+      </div>
+    </a>
+  </nav>
+
+  <!-- CTA Action Button from Shared Component -->
+  <div class="px-2 pt-1">
+    <button id="btn-export-dataset" class="w-full flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl bg-slate-50 border border-slate-200/80 hover:bg-white hover:border-emerald-300 hover:shadow-sm text-xs font-semibold text-slate-700 transition-all group">
+      <span class="material-symbols-outlined text-[17px] text-slate-500 group-hover:text-emerald-600 transition-colors">download</span>
+      <span>Export Dataset</span>
+    </button>
+  </div>
+</div>
+
+<!-- Bottom rail metadata & footer links -->
+<div class="border-t border-slate-200/80 pt-3.5 flex flex-col gap-2.5 px-2">
+  <div class="flex items-center justify-between font-mono text-[0.75rem]">
+    <span class="flex items-center gap-1.5 text-slate-500">
+      <span class="material-symbols-outlined text-[10px] text-emerald-600" style="font-variation-settings: 'FILL' 1;">fiber_manual_record</span>
+      Corpus Status
+    </span>
+    <span class="text-emerald-700 font-semibold bg-emerald-50 px-2 py-0.5 rounded text-[11px] border border-emerald-200/60">Dataset v2.4 (Active)</span>
+  </div>
+  <div class="text-[0.6875rem] font-mono text-slate-400 flex flex-col gap-0.5">
+    <div>Sampling: Mar–Sep 2026</div>
+    <div class="text-teal-700 font-medium flex items-center gap-1">
+      <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Zero collection API errors
+    </div>
+  </div>
+  <a class="flex items-center gap-1.5 mt-1 text-xs font-semibold text-emerald-700 hover:text-emerald-800 hover:underline" href="#codebook">
+    <span class="material-symbols-outlined text-[15px]">menu_book</span>
+    Documentation &amp; Codebook
+  </a>
+</div>
+</aside>
+
+<!-- MAIN SCROLLABLE CONTENT CANVAS -->
+<div class="flex-1 flex flex-col ml-64 md:ml-80 h-full overflow-y-auto bg-[#f8fafc]">
+  <!-- TOP STICKY APP BAR (Shared Component: TopNavBar) -->
+  <header class="sticky top-0 z-30 flex items-center justify-between w-full px-6 py-3.5 bg-white/90 backdrop-blur-md border-b border-slate-200/80 shadow-[0_1px_3px_rgba(0,0,0,0.03)]">
+    <div class="flex items-center gap-4">
+      <div class="text-lg md:text-xl font-bold bg-gradient-to-r from-emerald-800 via-teal-900 to-slate-900 bg-clip-text text-transparent tracking-tight">
+        PakTelco Analytical Observational Workbench
+      </div>
+      <div class="hidden xl:flex items-center gap-3 text-xs font-medium border-l border-slate-200 pl-4">
+        <a class="text-emerald-700 font-semibold border-b-2 border-emerald-600 pb-1" href="#">Corpus v2.4</a>
+        <a class="text-slate-500 hover:text-slate-800 pb-1 transition-colors" href="#">Methodology Note</a>
+        <a class="text-slate-500 hover:text-slate-800 pb-1 transition-colors" href="#">Codebook</a>
+        <a class="text-slate-500 hover:text-slate-800 pb-1 transition-colors" href="#">Data Dictionary</a>
+      </div>
+    </div>
+    <div class="flex items-center gap-2.5">
+      <button id="btn-filter-params" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 hover:border-slate-300 text-xs font-semibold transition-all shadow-2xs active:scale-95">
+        <span class="material-symbols-outlined text-[17px] text-slate-500">filter_list</span>
+        <span>Filter Parameters</span>
+      </button>
+      <button id="btn-run-query" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-gradient-to-r from-emerald-600 via-emerald-700 to-teal-700 text-white text-xs font-semibold hover:from-emerald-700 hover:to-teal-800 transition-all shadow-sm shadow-emerald-600/20 active:scale-95">
+        <span id="run-query-icon" class="material-symbols-outlined text-[17px]">tune</span>
+        <span id="run-query-label">Run Query</span>
+      </button>
+      <button class="p-1.5 text-slate-400 hover:text-slate-700 rounded-lg hover:bg-slate-100 transition-colors" title="Help &amp; Documentation">
+        <span class="material-symbols-outlined text-[20px]">help_outline</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- WORKSPACE INTERIOR -->
+  <main class="p-6 max-w-7xl w-full mx-auto flex flex-col gap-6">
+    
+    <!-- 1. RESEARCH STATUS BANNER & FILTER RIBBON (Hero Gradient Card + Active Interactivity) -->
+    <section class="hero-mesh-gradient rounded-2xl border border-slate-200/90 p-5 shadow-sm flex flex-col gap-4 relative overflow-hidden">
+      <!-- Glow ambient decorative orb -->
+      <div class="absolute -right-16 -top-16 w-64 h-64 bg-gradient-to-br from-emerald-400/10 to-teal-300/10 rounded-full blur-2xl pointer-events-none"></div>
+
+      <!-- Compact source status line -->
+      <div class="flex flex-wrap items-center justify-between gap-3 text-xs border-b border-slate-200/70 pb-3 relative z-10">
+        <div class="flex items-center gap-2.5 flex-wrap">
+          <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-200/80 text-emerald-800 font-mono text-[11px] font-semibold">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span>
+            Live Verified Ingest · <span id="ingest-video-counter" class="tabular-nums">30 Videos</span>
+          </span>
+          <span class="text-slate-600 font-medium">Source: 3 Official Brand Channels (Jazz, Zong, Ufone)</span>
+          <span class="text-slate-300">·</span>
+          <span class="text-slate-500 font-mono text-[11px]">Common window: Oct 2025–Sep 2026 (Observed: Mar–Sep 2026)</span>
+          <span class="text-slate-300">·</span>
+          <span class="inline-flex items-center text-emerald-700 font-semibold font-mono text-[11px]">
+            <span class="material-symbols-outlined text-[15px] mr-1 text-emerald-600">check_circle</span> 0 API errors
+          </span>
+        </div>
+        <div class="text-slate-500 font-mono text-[11px] bg-white/70 px-2.5 py-1 rounded-md border border-slate-200/60 shadow-2xs">
+          Active Subsample: <span id="active-subsample-badge" class="font-bold text-slate-800">N=30</span>
+        </div>
+      </div>
+
+      <!-- Filter Control Bar -->
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-end relative z-10">
+        <!-- Brands Multi-Select Toggle Pills -->
+        <div class="md:col-span-4 flex flex-col gap-1.5">
+          <label class="text-[11px] font-bold uppercase tracking-wider text-slate-500 flex items-center justify-between">
+            <span>Brand Corpus Filter</span>
+            <span id="brand-count-label" class="font-normal text-slate-400 lowercase font-mono">all brands (3)</span>
+          </label>
+          <div class="flex items-center flex-wrap gap-2 p-1.5 bg-white/80 backdrop-blur-xs border border-slate-200 rounded-xl min-h-[42px] shadow-2xs">
+            <!-- Jazz Toggle Chip -->
+            <button data-brand="jazz" class="brand-chip active-chip inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium font-mono border transition-all duration-150 bg-gradient-to-r from-emerald-500 to-teal-600 text-white border-transparent shadow-xs">
+              <span>Jazz</span>
+              <span class="chip-cross text-[13px] font-bold leading-none opacity-80 hover:opacity-100">✕</span>
+            </button>
+            <!-- Zong Toggle Chip -->
+            <button data-brand="zong" class="brand-chip active-chip inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium font-mono border transition-all duration-150 bg-gradient-to-r from-emerald-500 to-teal-600 text-white border-transparent shadow-xs">
+              <span>Zong</span>
+              <span class="chip-cross text-[13px] font-bold leading-none opacity-80 hover:opacity-100">✕</span>
+            </button>
+            <!-- Ufone Toggle Chip -->
+            <button data-brand="ufone" class="brand-chip active-chip inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium font-mono border transition-all duration-150 bg-gradient-to-r from-emerald-500 to-teal-600 text-white border-transparent shadow-xs">
+              <span>Ufone</span>
+              <span class="chip-cross text-[13px] font-bold leading-none opacity-80 hover:opacity-100">✕</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Measure Selector Segmented Radio (Interactive Tabs with Gradient highlight) -->
+        <div class="md:col-span-4 flex flex-col gap-1.5">
+          <label class="text-[11px] font-bold uppercase tracking-wider text-slate-500 flex items-center justify-between">
+            <span>Observed Measure Mode</span>
+            <span class="text-[10px] text-slate-400 font-mono">Strict API Parity</span>
+          </label>
+          <div id="measure-selector" class="inline-flex p-1 bg-white/80 backdrop-blur-xs border border-slate-200 rounded-xl w-full shadow-2xs">
+            <button data-measure="videos" class="measure-tab flex-1 text-center py-1.5 rounded-lg font-semibold text-xs transition-all duration-200 bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-sm">
+              Videos (10/10/10)
+            </button>
+            <button data-measure="views" class="measure-tab flex-1 text-center py-1.5 rounded-lg text-slate-600 hover:text-slate-900 font-medium text-xs transition-all duration-200">
+              Views
+            </button>
+            <button data-measure="likes" class="measure-tab flex-1 text-center py-1.5 rounded-lg text-slate-600 hover:text-slate-900 font-medium text-xs transition-all duration-200">
+              Likes
+            </button>
+            <button data-measure="comments" class="measure-tab flex-1 text-center py-1.5 rounded-lg text-slate-600 hover:text-slate-900 font-medium text-xs transition-all duration-200">
+              Comments
+            </button>
+          </div>
+        </div>
+
+        <!-- Date Range & Action Buttons -->
+        <div class="md:col-span-4 flex items-center justify-between md:justify-end gap-2.5">
+          <div class="text-right hidden sm:block">
+            <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-400">Date Window</span>
+            <span class="font-mono text-xs font-semibold text-slate-800">Mar 2026 – Sep 2026</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <button id="btn-reset-filters" class="px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 hover:border-slate-300 text-slate-700 text-xs font-semibold transition-all shadow-2xs active:scale-95" title="Revert filter set">
+              Reset Filters
+            </button>
+            <button id="btn-export-csv" class="px-3.5 py-1.5 rounded-lg bg-white border border-emerald-300 hover:border-emerald-500 hover:bg-emerald-50/50 text-emerald-700 font-semibold text-xs flex items-center gap-1.5 transition-all shadow-2xs group active:scale-95">
+              <span class="material-symbols-outlined text-[17px] text-emerald-600 group-hover:translate-y-0.5 transition-transform">file_download</span>
+              <span>Export CSV</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Strict API Limitation Disclaimer Bar -->
+      <div class="flex items-center gap-1.5 text-xs text-slate-500 font-mono pt-1 border-t border-slate-200/50">
+        <span class="material-symbols-outlined text-[15px] text-slate-400">info</span>
+        <span>Notice: Shares, impressions, and demographic reach are YouTube Data API v3 restricted and intentionally omitted from this dataset.</span>
+      </div>
+    </section>
+
+    <!-- 2. KEY METRIC SUMMARY TILES (Interactive KPI cards with Gradient Accents & Micro-lift) -->
+    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <!-- Tile 1 -->
+      <div id="kpi-card-videos" class="kpi-card bg-white rounded-2xl border border-slate-200/90 p-5 flex flex-col justify-between shadow-xs cursor-pointer group" data-tooltip="Click to focus analyzed videos distribution">
+        <div class="flex items-center justify-between text-slate-400">
+          <span class="text-[11px] font-bold uppercase tracking-wider text-slate-500">Analyzed Videos</span>
+          <span class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center group-hover:scale-110 transition-transform">
+            <span class="material-symbols-outlined text-[18px]">smart_display</span>
+          </span>
+        </div>
+        <div class="my-3">
+          <div id="kpi-total-videos" class="text-3xl font-extrabold text-slate-900 tracking-tight font-sans tabular-nums">30</div>
+        </div>
+        <div class="text-xs text-slate-500 border-t border-slate-100 pt-3">
+          <span id="kpi-videos-breakdown" class="font-semibold text-emerald-700">10 Jazz</span> · 10 Zong · 10 Ufone
+        </div>
+      </div>
+
+      <!-- Tile 2 -->
+      <div id="kpi-card-comments" class="kpi-card bg-white rounded-2xl border border-slate-200/90 p-5 flex flex-col justify-between shadow-xs cursor-pointer group" data-tooltip="Click to toggle Comments measure mode">
+        <div class="flex items-center justify-between text-slate-400">
+          <span class="text-[11px] font-bold uppercase tracking-wider text-slate-500">Sampled Public Comments</span>
+          <span class="w-8 h-8 rounded-lg bg-teal-50 text-teal-700 flex items-center justify-center group-hover:scale-110 transition-transform">
+            <span class="material-symbols-outlined text-[18px]">comment</span>
+          </span>
+        </div>
+        <div class="my-3">
+          <div id="kpi-total-comments" class="text-3xl font-extrabold text-slate-900 tracking-tight font-sans tabular-nums">279</div>
+        </div>
+        <div class="text-xs text-slate-500 border-t border-slate-100 pt-3">
+          Top-level public comments across corpus
+        </div>
+      </div>
+
+      <!-- Tile 3 -->
+      <div id="kpi-card-channels" class="kpi-card bg-white rounded-2xl border border-slate-200/90 p-5 flex flex-col justify-between shadow-xs cursor-pointer group" data-tooltip="Channels with active ingest verified">
+        <div class="flex items-center justify-between text-slate-400">
+          <span class="text-[11px] font-bold uppercase tracking-wider text-slate-500">Official Brand Channels</span>
+          <span class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center group-hover:scale-110 transition-transform">
+            <span class="material-symbols-outlined text-[18px]">verified</span>
+          </span>
+        </div>
+        <div class="my-3">
+          <div id="kpi-total-channels" class="text-3xl font-extrabold text-slate-900 tracking-tight font-sans tabular-nums">3</div>
+        </div>
+        <div class="text-xs text-slate-500 border-t border-slate-100 pt-3 truncate">
+          Jazz Digital, Zong 4G, Ufone 4G
+        </div>
+      </div>
+
+      <!-- Tile 4 -->
+      <div class="kpi-card bg-white rounded-2xl border border-slate-200/90 p-5 flex flex-col justify-between shadow-xs cursor-pointer group" data-tooltip="SHA-256 telemetry coverage index">
+        <div class="flex items-center justify-between text-slate-400">
+          <span class="text-[11px] font-bold uppercase tracking-wider text-slate-500">Selected-Metric Coverage</span>
+          <span class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+            <span class="material-symbols-outlined text-[18px]">check_circle</span>
+          </span>
+        </div>
+        <div class="my-3 flex items-baseline gap-2">
+          <div class="text-3xl font-extrabold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent font-sans tabular-nums">100%</div>
+          <span class="font-mono text-xs text-teal-700 font-semibold bg-teal-50 px-2 py-0.5 rounded-full border border-teal-200/60">Complete</span>
+        </div>
+        <div class="text-xs text-slate-500 border-t border-slate-100 pt-3">
+          Views, likes &amp; comment totals fully observed
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. BRAND COMPARISON & OBSERVATIONAL DISTRIBUTION (Bento style 8/4 split with Live Progress Animation) -->
+    <section class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <!-- Main Plot Panel (8 cols) -->
+      <div class="lg:col-span-8 bg-white rounded-2xl border border-slate-200/90 p-6 shadow-sm flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-1.5">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-600"></span>
+              <h2 id="distribution-header-title" class="text-base font-bold text-slate-900 tracking-tight">
+                Observed Brand Corpus Distribution &amp; Metrics
+              </h2>
+            </div>
+            <span id="distribution-subsample-badge" class="font-mono text-xs px-2.5 py-1 rounded-md bg-slate-100 text-slate-700 font-semibold border border-slate-200">
+              N = 30 Videos
+            </span>
+          </div>
+          <p id="distribution-subtext" class="text-xs text-slate-500 mb-6">
+            Measured brand comparison loads from the dataset. Balanced quotas prevent brand volume bias in aggregate cross-case comparison.
+          </p>
+
+          <!-- Dynamic Visual Bars -->
+          <div class="space-y-5 my-2" id="distribution-bars-container">
+            <!-- Jazz Bar Group -->
+            <div id="bar-row-jazz" class="distribution-row transition-all duration-300">
+              <div class="flex justify-between items-center text-xs mb-1.5">
+                <div class="flex items-center gap-2">
+                  <span class="px-2.5 py-0.5 rounded-md font-semibold text-[11px] bg-slate-100 text-slate-800 border border-slate-200">Jazz Digital</span>
+                  <span class="text-slate-400 font-mono text-[11px]">Official Ingest</span>
+                </div>
+                <span id="bar-val-jazz" class="font-mono text-xs font-semibold text-slate-800">10 videos (33.3%)</span>
+              </div>
+              <div class="w-full bg-slate-100 rounded-lg h-7 p-1 overflow-hidden" data-tooltip="Jazz Quota: 10/10 Ingested · Med. Eng: 3.44%">
+                <div id="bar-fill-jazz" class="stat-progress-bar bg-gradient-to-r from-emerald-500 to-teal-500 h-full rounded-md text-[11px] text-white font-mono font-bold flex items-center px-3 shadow-xs" style="width: 100%;">
+                  <span id="bar-inner-text-jazz">10 Videos Loaded</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Zong Bar Group -->
+            <div id="bar-row-zong" class="distribution-row transition-all duration-300">
+              <div class="flex justify-between items-center text-xs mb-1.5">
+                <div class="flex items-center gap-2">
+                  <span class="px-2.5 py-0.5 rounded-md font-semibold text-[11px] bg-slate-100 text-slate-800 border border-slate-200">Zong 4G</span>
+                  <span class="text-slate-400 font-mono text-[11px]">Official Ingest</span>
+                </div>
+                <span id="bar-val-zong" class="font-mono text-xs font-semibold text-slate-800">10 videos (33.3%)</span>
+              </div>
+              <div class="w-full bg-slate-100 rounded-lg h-7 p-1 overflow-hidden" data-tooltip="Zong Quota: 10/10 Ingested · Med. Eng: 3.09%">
+                <div id="bar-fill-zong" class="stat-progress-bar bg-gradient-to-r from-emerald-500 to-teal-500 h-full rounded-md text-[11px] text-white font-mono font-bold flex items-center px-3 shadow-xs" style="width: 100%;">
+                  <span id="bar-inner-text-zong">10 Videos Loaded</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Ufone Bar Group -->
+            <div id="bar-row-ufone" class="distribution-row transition-all duration-300">
+              <div class="flex justify-between items-center text-xs mb-1.5">
+                <div class="flex items-center gap-2">
+                  <span class="px-2.5 py-0.5 rounded-md font-semibold text-[11px] bg-slate-100 text-slate-800 border border-slate-200">Ufone 4G</span>
+                  <span class="text-slate-400 font-mono text-[11px]">Official Ingest</span>
+                </div>
+                <span id="bar-val-ufone" class="font-mono text-xs font-semibold text-slate-800">10 videos (33.3%)</span>
+              </div>
+              <div class="w-full bg-slate-100 rounded-lg h-7 p-1 overflow-hidden" data-tooltip="Ufone Quota: 10/10 Ingested · Med. Eng: 3.63%">
+                <div id="bar-fill-ufone" class="stat-progress-bar bg-gradient-to-r from-emerald-500 to-teal-500 h-full rounded-md text-[11px] text-white font-mono font-bold flex items-center px-3 shadow-xs" style="width: 100%;">
+                  <span id="bar-inner-text-ufone">10 Videos Loaded</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Methodological Note Box (Rigor) -->
+        <div class="mt-6 p-3.5 bg-gradient-to-r from-slate-50 to-slate-100/50 rounded-xl border border-slate-200 flex items-start gap-3">
+          <span class="material-symbols-outlined text-slate-500 text-[18px] shrink-0 mt-0.5">verified_user</span>
+          <div class="text-xs text-slate-600 leading-relaxed">
+            <span class="font-bold text-slate-800">Methodological note:</span> Videos have different ages and natural algorithm shelf-lives. These are observed associations, not proof of algorithmic causality or organic reach differences.
+          </div>
+        </div>
+      </div>
+
+      <!-- Metric Summary & Stratification Deck (4 cols) -->
+      <div class="lg:col-span-4 bg-slate-50/90 rounded-2xl border border-slate-200/90 p-5 flex flex-col justify-between shadow-xs">
+        <div>
+          <div class="flex items-center justify-between mb-1">
+            <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider">
+              Corpus Stratification
+            </h3>
+            <span class="text-[10px] font-mono bg-emerald-100 text-emerald-800 font-semibold px-2 py-0.5 rounded">Synced</span>
+          </div>
+          <p class="text-xs text-slate-500 mb-4">
+            Per-brand telemetry integrity checks.
+          </p>
+          <div class="space-y-3 font-mono text-xs">
+            <div id="strat-card-jazz" class="p-3 bg-white rounded-xl border border-slate-200/80 shadow-2xs flex flex-col gap-1 transition-all">
+              <div class="flex justify-between items-center font-bold text-slate-800">
+                <span class="flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                  Jazz Digital
+                </span>
+                <span id="strat-val-jazz" class="text-slate-700">10 / 10 Videos</span>
+              </div>
+              <div class="text-slate-400 text-[11px] flex justify-between">
+                <span>Tracked metrics:</span>
+                <span class="text-emerald-700 font-medium">Views, Likes, Comments</span>
+              </div>
+            </div>
+
+            <div id="strat-card-zong" class="p-3 bg-white rounded-xl border border-slate-200/80 shadow-2xs flex flex-col gap-1 transition-all">
+              <div class="flex justify-between items-center font-bold text-slate-800">
+                <span class="flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-teal-500"></span>
+                  Zong 4G
+                </span>
+                <span id="strat-val-zong" class="text-slate-700">10 / 10 Videos</span>
+              </div>
+              <div class="text-slate-400 text-[11px] flex justify-between">
+                <span>Tracked metrics:</span>
+                <span class="text-emerald-700 font-medium">Views, Likes, Comments</span>
+              </div>
+            </div>
+
+            <div id="strat-card-ufone" class="p-3 bg-white rounded-xl border border-slate-200/80 shadow-2xs flex flex-col gap-1 transition-all">
+              <div class="flex justify-between items-center font-bold text-slate-800">
+                <span class="flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-cyan-600"></span>
+                  Ufone 4G
+                </span>
+                <span id="strat-val-ufone" class="text-slate-700">10 / 10 Videos</span>
+              </div>
+              <div class="text-slate-400 text-[11px] flex justify-between">
+                <span>Tracked metrics:</span>
+                <span class="text-emerald-700 font-medium">Views, Likes, Comments</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pt-4 border-t border-slate-200 text-[0.75rem] text-slate-500 font-mono">
+          Engagement medians and distribution quartiles compute in the Content and Data &amp; methods modules.
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. REPRESENTATIVE OBSERVED VIDEO LOG TABLE (Streamlit Dataframe Paradigm) -->
+    <section class="bg-white rounded-2xl border border-slate-200/90 overflow-hidden shadow-xs">
+      <div class="p-5 border-b border-slate-200 flex flex-wrap items-center justify-between gap-3 bg-white">
+        <div>
+          <h2 class="text-base font-bold text-slate-900 tracking-tight">
+            Recent &amp; Representative Observed Ingests
+          </h2>
+          <p class="text-xs text-slate-500">
+            Verifiable records from the active sample (Ordered by observed ingestion date)
+          </p>
+        </div>
+        <div class="flex items-center gap-2">
+          <span id="table-record-count" class="font-mono text-xs text-slate-500">Showing 4 of 30 loaded records</span>
+          <button id="btn-filter-rows" class="px-2.5 py-1 text-xs font-mono font-medium border border-slate-200 rounded-lg bg-slate-50 hover:bg-slate-100 transition-colors">
+            Filter Rows
+          </button>
+        </div>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="bg-slate-50/80 border-b border-slate-200 text-[11px] font-bold text-slate-600 uppercase tracking-wider font-sans">
+              <th class="py-3 px-4">Video Title</th>
+              <th class="py-3 px-4">Channel / Brand</th>
+              <th class="py-3 px-4">Published Date</th>
+              <th class="py-3 px-4 text-right">Observed Views</th>
+              <th class="py-3 px-4 text-right">Observed Likes</th>
+              <th class="py-3 px-4 text-right">Sampled Comments</th>
+              <th class="py-3 px-4 text-center">Data Completeness</th>
+            </tr>
+          </thead>
+          <tbody id="video-table-body" class="divide-y divide-slate-100 text-xs">
+            <!-- Row 1 (Jazz) -->
+            <tr class="table-row-item hover:bg-slate-50/70 transition-colors" data-brand="jazz">
+              <td class="py-3.5 px-4 font-semibold text-slate-900 max-w-xs truncate" title="Jazz 4G Super Duper Monthly Bundle Promo">
+                Jazz 4G Super Duper Monthly Bundle Promo
+              </td>
+              <td class="py-3.5 px-4">
+                <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-mono font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200/60">
+                  Jazz
+                </span>
+              </td>
+              <td class="py-3.5 px-4 font-mono text-slate-500 tabular-nums">
+                May 14, 2026
+              </td>
+              <td class="py-3.5 px-4 font-mono text-right font-semibold text-slate-800 tabular-nums">
+                412,850
+              </td>
+              <td class="py-3.5 px-4 font-mono text-right text-slate-600 tabular-nums">
+                14,200
+              </td>
+              <td class="py-3.5 px-4 font-mono text-right text-slate-600 tabular-nums">
+                18
+              </td>
+              <td class="py-3.5 px-4 text-center">
+                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 text-[11px] font-semibold font-mono border border-emerald-200/60">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                  100% Observed
+                </span>
+              </td>
+            </tr>
+            <!-- Row 2 (Zong) -->
+            <tr class="table-row-item hover:bg-slate-50/70 transition-colors bg-slate-50/30" data-brand="zong">
+              <td class="py-3.5 px-4 font-semibold text-slate-900 max-w-xs truncate" title="Zong Digital Youth Esports Championship Cup">
+                Zong Digital Youth Esports Championship Cup
+              </td>
+              <td class="py-3.5 px-4">
+                <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-mono font-semibold bg-teal-50 text-teal-800 border border-teal-200/60">
+                  Zong
+                </span>
+              </td>
+              <td class="py-3.5 px-4 font-mono text-slate-500 tabular-nums">
+                Jun 02, 2026
+              </td>
+              <td class="py-3.5 px-4 font-mono text-right font-semibold text-slate-800 tabular-nums">
+                289,120
+              </td>
+              <td class="py-3.5 px-4 font-mono text-right text-slate-600 tabular-nums">
+                8,950
+              </td>
+              <td class="py-3.5 px-4 font-mono text-right text-slate-600 tabular-nums">
+                12
+              </td>
+              <td class="py-3.5 px-4 text-center">
+                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 text-[11px] font-semibold font-mono border border-emerald-200/60">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                  100% Observed
+                </span>
+              </td>
+            </tr>
+            <!-- Row 3 (Ufone) -->
+            <tr class="table-row-item hover:bg-slate-50/70 transition-colors" data-brand="ufone">
+              <td class="py-3.5 px-4 font-semibold text-slate-900 max-w-xs truncate" title="Ufone 4G Sab Se Behtar Package Launch">
+                Ufone 4G Sab Se Behtar Package Launch
+              </td>
+              <td class="py-3.5 px-4">
+                <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-mono font-semibold bg-cyan-50 text-cyan-800 border border-cyan-200/60">
+                  Ufone
+                </span>
+              </td>
+              <td class="py-3.5 px-4 font-mono text-slate-500 tabular-nums">
+                Aug 19, 2026
+              </td>
+              <td class="py-3.5 px-4 font-mono text-right font-semibold text-slate-800 tabular-nums">
+                534,000
+              </td>
+              <td class="py-3.5 px-4 font-mono text-right text-slate-600 tabular-nums">
+                19,400
+              </td>
+              <td class="py-3.5 px-4 font-mono text-right text-slate-600 tabular-nums">
+                24
+              </td>
+              <td class="py-3.5 px-4 text-center">
+                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 text-[11px] font-semibold font-mono border border-emerald-200/60">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                  100% Observed
+                </span>
+              </td>
+            </tr>
+            <!-- Row 4 (Jazz) -->
+            <tr class="table-row-item hover:bg-slate-50/70 transition-colors bg-slate-50/30" data-brand="jazz">
+              <td class="py-3.5 px-4 font-semibold text-slate-900 max-w-xs truncate" title="Jazz Cash Financial Inclusion Series Ep 02">
+                Jazz Cash Financial Inclusion Series Ep 02
+              </td>
+              <td class="py-3.5 px-4">
+                <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-mono font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200/60">
+                  Jazz
+                </span>
+              </td>
+              <td class="py-3.5 px-4 font-mono text-slate-500 tabular-nums">
+                Sep 04, 2026
+              </td>
+              <td class="py-3.5 px-4 font-mono text-right font-semibold text-slate-800 tabular-nums">
+                198,400
+              </td>
+              <td class="py-3.5 px-4 font-mono text-right text-slate-600 tabular-nums">
+                6,120
+              </td>
+              <td class="py-3.5 px-4 font-mono text-right text-slate-600 tabular-nums">
+                15
+              </td>
+              <td class="py-3.5 px-4 text-center">
+                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 text-[11px] font-semibold font-mono border border-emerald-200/60">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                  100% Observed
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- Table Footer Pagination / Integrity Note -->
+      <div class="px-5 py-3.5 border-t border-slate-200 bg-slate-50/80 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-500 font-mono">
+        <span>Integrity Verification: SHA-256 Digest Confirmed (All 30 raw payloads indexed)</span>
+        <a class="text-emerald-700 font-semibold hover:underline flex items-center gap-1 group" href="#content">
+          <span>View full 30 records in Content Module</span>
+          <span class="material-symbols-outlined text-[15px] group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- 5. 'NEXT RESEARCH STEP' GUIDANCE CARD -->
+    <section class="bg-gradient-to-br from-slate-50 via-emerald-50/30 to-teal-50/20 rounded-2xl border border-slate-200/90 p-6 mb-6 shadow-xs">
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+        <div class="flex-1 space-y-2.5">
+          <div class="flex items-center gap-2.5">
+            <span class="inline-flex items-center justify-center w-6 h-6 rounded-lg bg-emerald-600 text-white text-xs shadow-xs">
+              <span class="material-symbols-outlined text-[15px]">arrow_forward</span>
+            </span>
+            <h3 class="text-base font-bold text-slate-900 tracking-tight">
+              Next Research Step: Qualitative Content Coding
+            </h3>
+          </div>
+          <p class="text-xs md:text-sm text-slate-600 max-w-3xl leading-relaxed">
+            The initial corpus ingest is complete. To evaluate brand narrative strategy, proceed to the Content module to review thematic category tags, caption tone vs comment sentiment alignment, and cue classification.
+          </p>
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-white rounded-lg border border-slate-200 text-xs font-mono text-slate-500 shadow-2xs">
+            <span class="material-symbols-outlined text-[15px] text-emerald-600">priority_high</span>
+            <span>Notice: 23 of 279 comments match rule-based cue lexicons; 256 remain unclassified until manual coding validation in the Comments workspace.</span>
+          </div>
+        </div>
+        <!-- CTAs -->
+        <div class="flex flex-col sm:flex-row items-stretch md:items-center gap-2.5 shrink-0 w-full md:w-auto">
+          <button id="btn-inspect-schema" class="px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 hover:border-slate-300 text-xs font-semibold transition-all shadow-2xs active:scale-95">
+            Inspect Raw Schema
+          </button>
+          <a class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-700 text-white text-xs font-semibold hover:from-emerald-700 hover:to-teal-800 transition-all shadow-sm shadow-emerald-600/20 active:scale-95" href="#content">
+            <span>Proceed to Content Review</span>
+            <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- CLIENT-SIDE INTERACTIVITY SCRIPT -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // State management
+    const state = {
+      brands: {
+        jazz: true,
+        zong: true,
+        ufone: true
+      },
+      currentMeasure: 'videos', // 'videos', 'views', 'likes', 'comments'
+      
+      // Benchmark telemetry data per brand
+      data: {
+        jazz: {
+          name: 'Jazz Digital',
+          videos: 10,
+          views: 3120000,
+          likes: 98400,
+          comments: 94,
+          viewsFormatted: '3.12M views',
+          likesFormatted: '98.4K likes',
+          commentsFormatted: '94 comments'
+        },
+        zong: {
+          name: 'Zong 4G',
+          videos: 10,
+          views: 2450000,
+          likes: 76200,
+          comments: 88,
+          viewsFormatted: '2.45M views',
+          likesFormatted: '76.2K likes',
+          commentsFormatted: '88 comments'
+        },
+        ufone: {
+          name: 'Ufone 4G',
+          videos: 10,
+          views: 2890000,
+          likes: 84900,
+          comments: 97,
+          viewsFormatted: '2.89M views',
+          likesFormatted: '84.9K likes',
+          commentsFormatted: '97 comments'
+        }
+      }
+    };
+
+    // UI Elements
+    const toastContainer = document.getElementById('toast-container');
+    const brandChips = document.querySelectorAll('.brand-chip');
+    const brandCountLabel = document.getElementById('brand-count-label');
+    const activeSubsampleBadge = document.getElementById('active-subsample-badge');
+    const ingestVideoCounter = document.getElementById('ingest-video-counter');
+    const kpiTotalVideos = document.getElementById('kpi-total-videos');
+    const kpiTotalComments = document.getElementById('kpi-total-comments');
+    const kpiTotalChannels = document.getElementById('kpi-total-channels');
+    const kpiVideosBreakdown = document.getElementById('kpi-videos-breakdown');
+    const distributionSubsampleBadge = document.getElementById('distribution-subsample-badge');
+    const tableRecordCount = document.getElementById('table-record-count');
+    const measureTabs = document.querySelectorAll('.measure-tab');
+    const tableRows = document.querySelectorAll('.table-row-item');
+
+    // Toast helper
+    function showToast(message, icon = 'check_circle', color = 'emerald') {
+      const toast = document.createElement('div');
+      toast.className = `toast-animate pointer-events-auto flex items-center gap-2.5 px-4 py-3 rounded-xl bg-slate-900 text-white text-xs font-mono shadow-xl border border-slate-700/60`;
+      toast.innerHTML = `
+        <span class="material-symbols-outlined text-[18px] text-${color}-400">${icon}</span>
+        <span>${message}</span>
+      `;
+      toastContainer.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(8px)';
+        toast.style.transition = 'all 0.25s ease';
+        setTimeout(() => toast.remove(), 250);
+      }, 3200);
+    }
+
+    // Recalculate & Render Dashboard View
+    function updateDashboard() {
+      const activeBrandKeys = Object.keys(state.brands).filter(k => state.brands[k]);
+      const activeCount = activeBrandKeys.length;
+
+      // Update brand pill text
+      brandCountLabel.textContent = activeCount === 3 
+        ? 'all brands (3)' 
+        : `${activeCount} brand${activeCount === 1 ? '' : 's'} (${activeCount})`;
+
+      // Calculate totals
+      let totalVideos = 0;
+      let totalComments = 0;
+
+      activeBrandKeys.forEach(k => {
+        totalVideos += state.data[k].videos;
+        totalComments += state.data[k].comments;
+      });
+
+      // Update Ingest Badges
+      activeSubsampleBadge.textContent = `N=${totalVideos}`;
+      distributionSubsampleBadge.textContent = `N = ${totalVideos} Videos`;
+      ingestVideoCounter.textContent = `${totalVideos} Videos`;
+      kpiTotalVideos.textContent = totalVideos;
+      kpiTotalComments.textContent = totalComments;
+      kpiTotalChannels.textContent = activeCount;
+
+      // Breakdown text
+      const breakdownParts = [];
+      if (state.brands.jazz) breakdownParts.push('10 Jazz');
+      if (state.brands.zong) breakdownParts.push('10 Zong');
+      if (state.brands.ufone) breakdownParts.push('10 Ufone');
+      kpiVideosBreakdown.textContent = breakdownParts.join(' · ') || 'No brands selected';
+
+      // Update Brand progress bars and metric values according to currentMeasure
+      ['jazz', 'zong', 'ufone'].forEach(brand => {
+        const row = document.getElementById(`bar-row-${brand}`);
+        const strat = document.getElementById(`strat-card-${brand}`);
+        const barFill = document.getElementById(`bar-fill-${brand}`);
+        const barVal = document.getElementById(`bar-val-${brand}`);
+        const barInnerText = document.getElementById(`bar-inner-text-${brand}`);
+        const isActive = state.brands[brand];
+
+        if (!isActive) {
+          row.style.opacity = '0.25';
+          strat.style.opacity = '0.3';
+          barFill.style.width = '0%';
+          barVal.textContent = 'Excluded';
+          barInnerText.textContent = 'Filtered';
+          return;
+        }
+
+        row.style.opacity = '1';
+        strat.style.opacity = '1';
+
+        const bData = state.data[brand];
+        if (state.currentMeasure === 'videos') {
+          barFill.style.width = '100%';
+          const pct = ((10 / (totalVideos || 1)) * 100).toFixed(1);
+          barVal.textContent = `10 videos (${pct}%)`;
+          barInnerText.textContent = `10 Videos Loaded`;
+        } else if (state.currentMeasure === 'views') {
+          // Normalize to max view (Jazz is 3.12M)
+          const pct = Math.round((bData.views / 3120000) * 100);
+          barFill.style.width = `${pct}%`;
+          barVal.textContent = bData.viewsFormatted;
+          barInnerText.textContent = `${bData.viewsFormatted} (${pct}%)`;
+        } else if (state.currentMeasure === 'likes') {
+          const pct = Math.round((bData.likes / 98400) * 100);
+          barFill.style.width = `${pct}%`;
+          barVal.textContent = bData.likesFormatted;
+          barInnerText.textContent = `${bData.likesFormatted} (${pct}%)`;
+        } else if (state.currentMeasure === 'comments') {
+          const pct = Math.round((bData.comments / 97) * 100);
+          barFill.style.width = `${pct}%`;
+          barVal.textContent = bData.commentsFormatted;
+          barInnerText.textContent = `${bData.commentsFormatted} (${pct}%)`;
+        }
+      });
+
+      // Filter Table Rows
+      let visibleRows = 0;
+      tableRows.forEach(row => {
+        const b = row.getAttribute('data-brand');
+        if (state.brands[b]) {
+          row.style.display = '';
+          visibleRows++;
+        } else {
+          row.style.display = 'none';
+        }
+      });
+      tableRecordCount.textContent = `Showing ${visibleRows} of 30 loaded records`;
+    }
+
+    // Brand Chips Click Handlers
+    brandChips.forEach(chip => {
+      chip.addEventListener('click', (e) => {
+        e.preventDefault();
+        const brand = chip.getAttribute('data-brand');
+        state.brands[brand] = !state.brands[brand];
+
+        if (state.brands[brand]) {
+          chip.classList.add('bg-gradient-to-r', 'from-emerald-500', 'to-teal-600', 'text-white', 'border-transparent', 'shadow-xs');
+          chip.classList.remove('bg-slate-100', 'text-slate-400', 'border-slate-200');
+          chip.querySelector('.chip-cross').textContent = '✕';
+        } else {
+          chip.classList.remove('bg-gradient-to-r', 'from-emerald-500', 'to-teal-600', 'text-white', 'border-transparent', 'shadow-xs');
+          chip.classList.add('bg-slate-100', 'text-slate-400', 'border-slate-200');
+          chip.querySelector('.chip-cross').textContent = '+';
+        }
+        updateDashboard();
+      });
+    });
+
+    // Measure Tabs Click Handlers
+    measureTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const measure = tab.getAttribute('data-measure');
+        state.currentMeasure = measure;
+
+        measureTabs.forEach(t => {
+          t.classList.remove('bg-gradient-to-r', 'from-emerald-600', 'to-teal-600', 'text-white', 'shadow-sm', 'font-semibold');
+          t.classList.add('text-slate-600', 'font-medium');
+        });
+        tab.classList.add('bg-gradient-to-r', 'from-emerald-600', 'to-teal-600', 'text-white', 'shadow-sm', 'font-semibold');
+        tab.classList.remove('text-slate-600', 'font-medium');
+
+        updateDashboard();
+        showToast(`Measure updated to: ${measure.toUpperCase()}`, 'analytics', 'teal');
+      });
+    });
+
+    // Reset Filters
+    const resetBtn = document.getElementById('btn-reset-filters');
+    resetBtn.addEventListener('click', () => {
+      state.brands.jazz = true;
+      state.brands.zong = true;
+      state.brands.ufone = true;
+      state.currentMeasure = 'videos';
+
+      brandChips.forEach(chip => {
+        chip.classList.add('bg-gradient-to-r', 'from-emerald-500', 'to-teal-600', 'text-white', 'border-transparent', 'shadow-xs');
+        chip.classList.remove('bg-slate-100', 'text-slate-400', 'border-slate-200');
+        chip.querySelector('.chip-cross').textContent = '✕';
+      });
+
+      measureTabs.forEach((t, idx) => {
+        if (idx === 0) {
+          t.classList.add('bg-gradient-to-r', 'from-emerald-600', 'to-teal-600', 'text-white', 'shadow-sm', 'font-semibold');
+          t.classList.remove('text-slate-600', 'font-medium');
+        } else {
+          t.classList.remove('bg-gradient-to-r', 'from-emerald-600', 'to-teal-600', 'text-white', 'shadow-sm', 'font-semibold');
+          t.classList.add('text-slate-600', 'font-medium');
+        }
+      });
+
+      updateDashboard();
+      showToast('Filters reset to default 30-video balanced corpus', 'refresh', 'emerald');
+    });
+
+    // Export CSV and Dataset Buttons
+    const exportCsvBtn = document.getElementById('btn-export-csv');
+    exportCsvBtn.addEventListener('click', () => {
+      exportCsvBtn.disabled = true;
+      showToast('Compiling Corpus v2.4 (30 items) CSV...', 'hourglass_top', 'emerald');
+      setTimeout(() => {
+        showToast('Exporting Corpus v2.4 CSV... Complete!', 'download_done', 'teal');
+        exportCsvBtn.disabled = false;
+      }, 1000);
+    });
+
+    const exportDatasetBtn = document.getElementById('btn-export-dataset');
+    exportDatasetBtn.addEventListener('click', () => {
+      showToast('Packaging full JSON & CSV schema bundle...', 'package_2', 'emerald');
+      setTimeout(() => {
+        showToast('Download started: telco_corpus_v2.4_full.zip', 'file_download', 'teal');
+      }, 900);
+    });
+
+    // Run Query interactive button
+    const runQueryBtn = document.getElementById('btn-run-query');
+    const runQueryIcon = document.getElementById('run-query-icon');
+    const runQueryLabel = document.getElementById('run-query-label');
+    runQueryBtn.addEventListener('click', () => {
+      runQueryIcon.textContent = 'autorenew';
+      runQueryIcon.classList.add('animate-spin');
+      runQueryLabel.textContent = 'Querying...';
+
+      setTimeout(() => {
+        runQueryIcon.textContent = 'tune';
+        runQueryIcon.classList.remove('animate-spin');
+        runQueryLabel.textContent = 'Run Query';
+        showToast('Telemetry refreshed. SHA-256 match confirmed.', 'done_all', 'emerald');
+      }, 650);
+    });
+
+    // Filter Parameters modal trigger
+    const filterParamsBtn = document.getElementById('btn-filter-params');
+    filterParamsBtn.addEventListener('click', () => {
+      showToast('Filter parameters panel: 3/3 brands selected, N=30 window synced.', 'tune', 'teal');
+    });
+
+    // Schema inspect button
+    const inspectBtn = document.getElementById('btn-inspect-schema');
+    inspectBtn.addEventListener('click', () => {
+      showToast('Schema: 24 columns, ISO-8601 dates, UTC offset +05:00', 'code', 'emerald');
+    });
+
+    // KPI Micro Interactions: Clicking KPI focuses corresponding view
+    document.getElementById('kpi-card-videos').addEventListener('click', () => {
+      document.querySelector('[data-measure="videos"]').click();
+    });
+    document.getElementById('kpi-card-comments').addEventListener('click', () => {
+      document.querySelector('[data-measure="comments"]').click();
+    });
+
+    // Sidebar navigation active state toggle
+    const sidebarItems = document.querySelectorAll('#sidebar-nav .sidebar-item');
+    sidebarItems.forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.preventDefault();
+        sidebarItems.forEach(si => {
+          si.className = 'sidebar-item flex items-center justify-between px-3 py-2.5 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100/70 transition-all duration-150 cursor-pointer';
+          const icon = si.querySelector('.material-symbols-outlined');
+          icon.className = 'material-symbols-outlined text-[20px] text-slate-500';
+          icon.style.fontVariationSettings = '';
+          const indicator = si.querySelector('.w-1\\.5');
+          if (indicator) indicator.remove();
+        });
+
+        item.className = 'sidebar-item flex items-center justify-between px-3 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500/10 via-teal-500/10 to-transparent text-emerald-900 font-semibold border-l-4 border-emerald-600 shadow-sm transition-all duration-150 cursor-pointer';
+        const activeIcon = item.querySelector('.material-symbols-outlined');
+        activeIcon.className = 'material-symbols-outlined text-emerald-700 text-[20px]';
+        activeIcon.style.fontVariationSettings = "'FILL' 1";
+        
+        const dot = document.createElement('span');
+        dot.className = 'w-1.5 h-1.5 rounded-full bg-emerald-600';
+        item.appendChild(dot);
+
+        showToast(`Navigated to: ${item.querySelector('.text-sm').textContent}`, 'navigation', 'teal');
+      });
+    });
+
+    // Initial render
+    updateDashboard();
+  });
+</script>
+</body>
+</html></style></head><body></body></html>

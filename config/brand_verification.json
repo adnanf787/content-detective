@@ -1,0 +1,38 @@
+{
+  "checked_at_utc": "2026-10-18T07:06:09.107316+00:00",
+  "checks": [
+    {
+      "brand": "Jazz",
+      "verification_url": "https://jazz.com.pk/",
+      "checked_at_utc": "2026-10-18T07:06:09.107316+00:00",
+      "corporate_http_status": 200,
+      "corporate_youtube_links": [
+        "https://www.youtube.com/user/MobilinkOfficialPK"
+      ],
+      "status": "verified",
+      "channel_id": "UCaPhZAbouhRyq_w59iA24qQ"
+    },
+    {
+      "brand": "Zong",
+      "verification_url": "https://www.zong.com.pk/",
+      "checked_at_utc": "2026-10-18T07:06:09.107316+00:00",
+      "corporate_http_status": 200,
+      "corporate_youtube_links": [
+        "https://www.youtube.com/channel/UCpgGe1f7cK-OSGtNcTBepCA"
+      ],
+      "status": "verified",
+      "channel_id": "UCpgGe1f7cK-OSGtNcTBepCA"
+    },
+    {
+      "brand": "Ufone",
+      "verification_url": "https://www.ufone.com/",
+      "checked_at_utc": "2026-10-18T07:06:09.107316+00:00",
+      "corporate_http_status": 200,
+      "corporate_youtube_links": [
+        "https://www.youtube.com/channel/UC84vSZJJYMaKr7mSkomy_Sg"
+      ],
+      "status": "verified",
+      "channel_id": "UC84vSZJJYMaKr7mSkomy_Sg"
+    }
+  ]
+}

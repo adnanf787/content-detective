@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+
+<html class="h-full bg-surface-container-lowest" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pakistani Social Media Content Detective — Research Workbench</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=JetBrains+Mono:wght@100..900&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-tertiary-fixed": "#001d31",
+            "on-tertiary": "#ffffff",
+            "secondary-fixed-dim": "#8bd6b6",
+            "on-background": "#131b2e",
+            "on-surface": "#131b2e",
+            "on-error-container": "#93000a",
+            "surface-container": "#eaedff",
+            "on-primary": "#ffffff",
+            "on-primary-container": "#9ffdd3",
+            "tertiary-fixed-dim": "#93ccff",
+            "surface-container-high": "#e2e7ff",
+            "error": "#ba1a1a",
+            "on-primary-fixed-variant": "#00513a",
+            "surface-container-highest": "#dae2fd",
+            "surface-container-low": "#f2f3ff",
+            "surface-tint": "#006c4e",
+            "secondary-fixed": "#a6f2d1",
+            "on-error": "#ffffff",
+            "on-primary-fixed": "#002115",
+            "primary-container": "#047857",
+            "surface-bright": "#faf8ff",
+            "outline": "#6e7a73",
+            "surface-variant": "#dae2fd",
+            "on-secondary-container": "#237157",
+            "on-surface-variant": "#3e4943",
+            "surface": "#faf8ff",
+            "tertiary-container": "#006fa8",
+            "primary-fixed-dim": "#7bd8b1",
+            "inverse-primary": "#7bd8b1",
+            "background": "#faf8ff",
+            "on-secondary-fixed-variant": "#00513b",
+            "inverse-surface": "#283044",
+            "error-container": "#ffdad6",
+            "inverse-on-surface": "#eef0ff",
+            "on-secondary-fixed": "#002116",
+            "surface-dim": "#d2d9f4",
+            "tertiary": "#005683",
+            "on-tertiary-fixed-variant": "#004b73",
+            "outline-variant": "#bdc9c1",
+            "secondary-container": "#a6f2d1",
+            "tertiary-fixed": "#cce5ff",
+            "on-secondary": "#ffffff",
+            "on-tertiary-container": "#dbecff",
+            "secondary": "#1b6b51",
+            "primary": "#005d42",
+            "surface-container-lowest": "#ffffff",
+            "primary-fixed": "#97f5cc"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-xl": "2rem",
+            "margin": "1rem",
+            "space-md": "0.75rem",
+            "space-sm": "0.5rem",
+            "gutter-desktop": "1.5rem",
+            "gutter": "1rem",
+            "space-lg": "1.25rem",
+            "space-xs": "0.25rem",
+            "margin-desktop": "2rem"
+          },
+          "fontFamily": {
+            "label-badge": ["Inter"],
+            "body-lg": ["Inter"],
+            "headline-lg": ["Inter"],
+            "body-sm": ["Inter"],
+            "headline-xl-mobile": ["Inter"],
+            "label-code": ["JetBrains Mono"],
+            "body-md": ["Inter"],
+            "headline-xl": ["Inter"],
+            "headline-md": ["Inter"]
+          },
+          "fontSize": {
+            "label-badge": ["0.6875rem", { "lineHeight": "0.9rem", "letterSpacing": "0.04em", "fontWeight": "600" }],
+            "body-lg": ["1rem", { "lineHeight": "1.6rem", "fontWeight": "400" }],
+            "headline-lg": ["1.5rem", { "lineHeight": "2rem", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "body-sm": ["0.75rem", { "lineHeight": "1.15rem", "fontWeight": "400" }],
+            "headline-xl-mobile": ["1.5rem", { "lineHeight": "2rem", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "label-code": ["0.8125rem", { "lineHeight": "1.2rem", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+            "body-md": ["0.875rem", { "lineHeight": "1.4rem", "fontWeight": "400" }],
+            "headline-xl": ["2rem", { "lineHeight": "2.5rem", "letterSpacing": "-0.025em", "fontWeight": "700" }],
+            "headline-md": ["1.125rem", { "lineHeight": "1.5rem", "letterSpacing": "-0.01em", "fontWeight": "600" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 20px;
+      line-height: 1;
+      display: inline-block;
+      text-transform: none;
+      letter-spacing: normal;
+      word-wrap: normal;
+      white-space: nowrap;
+      direction: ltr;
+      -webkit-font-smoothing: antialiased;
+      vertical-align: middle;
+    }
+    body {
+      color: #131b2e;
+      background-color: #ffffff;
+      font-family: 'Inter', sans-serif;
+    }
+    /* Tabular numeric alignment */
+    .tabular-nums {
+      font-variant-numeric: tabular-nums;
+    }
+  </style>
+</head>
+<body class="h-full flex flex-row overflow-hidden bg-surface-container-lowest antialiased text-on-surface">
+<!-- SIDEBAR NAVIGATION RAIL (Shared Component: SideNavBar) -->
+<aside class="fixed top-0 left-0 h-full z-40 flex flex-col justify-between p-4 w-64 md:w-80 bg-surface-container-low border-r border-outline-variant">
+<div class="flex flex-col gap-5">
+<!-- Wordmark & Study Crest -->
+<div class="px-2 pt-2">
+<div class="flex items-center gap-2 mb-1">
+<span class="inline-flex items-center justify-center w-6 h-6 rounded bg-primary text-on-primary">
+<span class="material-symbols-outlined text-[16px]">database</span>
+</span>
+<span class="text-headline-md font-headline-md font-bold text-on-surface tracking-tight">PTCL & Telco Corpus</span>
+</div>
+<div class="text-body-sm font-body-sm text-on-surface-variant font-medium">Content Detective</div>
+<div class="text-[0.6875rem] text-outline font-label-code mt-0.5 leading-tight">Pakistani Social Media Content Detective · Pakistan Telecom YouTube Study</div>
+<div class="mt-2 inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-secondary-container text-on-secondary-container text-label-badge font-label-badge">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+          Verified YouTube Ingest
+        </div>
+</div>
+<!-- Navigation Destinations (5 items from JSON) -->
+<nav class="flex flex-col gap-1 mt-2">
+<!-- Tab 1: Overview (ACTIVE) -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-surface-container-highest text-primary font-semibold border-l-4 border-primary transition-all duration-150" href="#overview">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<span class="text-body-md font-body-md font-medium">Overview</span>
+</a>
+<!-- Tab 2: Content (INACTIVE) -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors duration-150" href="#content">
+<span class="material-symbols-outlined">video_library</span>
+<span class="text-body-md font-body-md">Content</span>
+</a>
+<!-- Tab 3: Comments (INACTIVE) -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors duration-150" href="#comments">
+<span class="material-symbols-outlined">forum</span>
+<span class="text-body-md font-body-md">Comments</span>
+</a>
+<!-- Tab 4: Recommendations (INACTIVE) -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors duration-150" href="#recommendations">
+<span class="material-symbols-outlined">insights</span>
+<span class="text-body-md font-body-md">Recommendations</span>
+</a>
+<!-- Tab 5: Data & methods (INACTIVE) -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors duration-150" href="#methods">
+<span class="material-symbols-outlined">database</span>
+<span class="text-body-md font-body-md">Data & methods</span>
+</a>
+</nav>
+<!-- CTA Action Button from Shared Component -->
+<div class="px-2 pt-2">
+<button class="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg bg-surface-container-lowest border border-outline-variant hover:bg-surface-container text-body-sm font-body-md font-semibold text-on-surface transition-colors">
+<span class="material-symbols-outlined text-sm">download</span>
+          Export Dataset
+        </button>
+</div>
+</div>
+<!-- Bottom rail metadata & footer links -->
+<div class="border-t border-outline-variant pt-3 flex flex-col gap-2 px-2">
+<div class="flex items-center justify-between text-label-code font-label-code text-on-surface-variant text-[0.75rem]">
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[10px] text-primary" style="font-variation-settings: 'FILL' 1;">fiber_manual_record</span>
+          Corpus Status
+        </span>
+<span class="text-primary font-semibold">Dataset v2.4 (Active)</span>
+</div>
+<div class="text-[0.6875rem] font-label-code text-outline flex flex-col gap-0.5">
+<div>Sampling: Mar–Sep 2026</div>
+<div class="text-secondary font-medium">Zero collection API errors</div>
+</div>
+<a class="flex items-center gap-1.5 mt-1 text-label-badge font-label-badge text-primary hover:underline" href="#codebook">
+<span class="material-symbols-outlined text-[14px]">menu_book</span>
+        Documentation & Codebook
+      </a>
+</div>
+</aside>
+<!-- MAIN SCROLLABLE CONTENT CANVAS (Offset by sidebar w-64 md:w-80) -->
+<div class="flex-1 flex flex-col ml-64 md:ml-80 h-full overflow-y-auto bg-surface-container-lowest">
+<!-- TOP STICKY APP BAR (Shared Component: TopNavBar) -->
+<header class="sticky top-0 z-30 flex items-center justify-between w-full px-6 py-3 bg-surface-container-lowest border-b border-outline-variant">
+<div class="flex items-center gap-4">
+<div class="text-headline-md font-headline-md font-bold text-primary tracking-tight">
+          PakTelco Analytical Observational Workbench
+        </div>
+<div class="hidden lg:flex items-center gap-3 text-body-sm font-body-sm border-l border-outline-variant pl-4">
+<a class="text-primary font-semibold border-b-2 border-primary pb-1" href="#">Corpus v2.4</a>
+<a class="text-on-surface-variant hover:text-on-surface pb-1 transition-colors" href="#">Methodology Note</a>
+<a class="text-on-surface-variant hover:text-on-surface pb-1 transition-colors" href="#">Codebook</a>
+<a class="text-on-surface-variant hover:text-on-surface pb-1 transition-colors" href="#">Data Dictionary</a>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface hover:bg-surface-container text-body-sm font-body-sm font-medium transition-colors">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+<span>Filter Parameters</span>
+</button>
+<button class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary-container text-on-primary text-body-sm font-body-sm font-semibold hover:bg-secondary transition-colors">
+<span class="material-symbols-outlined text-[18px]">tune</span>
+<span>Run Query</span>
+</button>
+<button class="p-1.5 text-on-surface-variant hover:text-on-surface rounded-md hover:bg-surface-container transition-colors" title="Help & Documentation">
+<span class="material-symbols-outlined text-[20px]">help_outline</span>
+</button>
+</div>
+</header>
+<!-- WORKSPACE INTERIOR -->
+<main class="p-6 max-w-7xl w-full mx-auto flex flex-col gap-6">
+<!-- 1. RESEARCH STATUS BANNER & FILTER RIBBON (Streamlit Style Workbench Control) -->
+<section class="bg-surface-container-low rounded-xl border border-outline-variant p-4 flex flex-col gap-4">
+<!-- Compact source status line -->
+<div class="flex flex-wrap items-center justify-between gap-3 text-body-sm font-body-sm border-b border-outline-variant pb-3">
+<div class="flex items-center gap-2 flex-wrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-badge text-label-badge font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container animate-pulse"></span>
+              Live Verified Ingest · 30 Videos
+            </span>
+<span class="text-on-surface-variant font-medium">Source: 3 Official Brand Channels (Jazz, Zong, Ufone)</span>
+<span class="text-outline">·</span>
+<span class="text-on-surface-variant font-label-code text-[0.75rem]">Common window: Oct 2025–Sep 2026 (Observed posting: Mar–Sep 2026)</span>
+<span class="text-outline">·</span>
+<span class="inline-flex items-center text-primary font-medium text-label-code text-[0.75rem]">
+<span class="material-symbols-outlined text-[14px] mr-1">check_circle</span> 0 API errors
+            </span>
+</div>
+<div class="text-outline font-label-code text-[0.75rem]">
+            Active Subsample: N=30
+          </div>
+</div>
+<!-- Filter Control Bar (Streamlit-affinity controls) -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-end">
+<!-- Brands Multi-Select Pills -->
+<div class="md:col-span-4 flex flex-col gap-1.5">
+<label class="text-label-badge font-label-badge uppercase tracking-wider text-on-surface-variant flex items-center justify-between">
+<span>Brand Corpus Filter</span>
+<span class="font-normal text-outline lowercase">All Brands (3)</span>
+</label>
+<div class="flex items-center flex-wrap gap-1.5 p-1.5 bg-surface-container-lowest border border-outline-variant rounded-lg min-h-[38px]">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 bg-surface-container text-on-surface text-label-code rounded text-xs font-medium">
+                Jazz
+                <button class="hover:text-error text-outline leading-none text-xs">×</button>
+</span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 bg-surface-container text-on-surface text-label-code rounded text-xs font-medium">
+                Zong
+                <button class="hover:text-error text-outline leading-none text-xs">×</button>
+</span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 bg-surface-container text-on-surface text-label-code rounded text-xs font-medium">
+                Ufone
+                <button class="hover:text-error text-outline leading-none text-xs">×</button>
+</span>
+</div>
+</div>
+<!-- Measure Selector Segmented Radio -->
+<div class="md:col-span-4 flex flex-col gap-1.5">
+<label class="text-label-badge font-label-badge uppercase tracking-wider text-on-surface-variant flex items-center justify-between">
+<span>Observed Measure Mode</span>
+<span class="text-[0.625rem] text-outline font-normal">Strict API Parity</span>
+</label>
+<div class="inline-flex p-1 bg-surface-container-lowest border border-outline-variant rounded-lg text-body-sm font-body-sm w-full">
+<button class="flex-1 text-center py-1 rounded bg-primary-container text-on-primary font-semibold text-xs transition">
+                Videos (10/10/10)
+              </button>
+<button class="flex-1 text-center py-1 rounded text-on-surface-variant hover:text-on-surface font-medium text-xs transition">
+                Views
+              </button>
+<button class="flex-1 text-center py-1 rounded text-on-surface-variant hover:text-on-surface font-medium text-xs transition">
+                Likes
+              </button>
+<button class="flex-1 text-center py-1 rounded text-on-surface-variant hover:text-on-surface font-medium text-xs transition">
+                Comments
+              </button>
+</div>
+</div>
+<!-- Date Range & Action Buttons -->
+<div class="md:col-span-4 flex items-center justify-between md:justify-end gap-2">
+<div class="text-right hidden sm:block">
+<span class="block text-label-badge font-label-badge uppercase text-outline">Date Window</span>
+<span class="text-label-code text-xs font-semibold text-on-surface">Mar 2026 – Sep 2026</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-2.5 py-1.5 rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface hover:bg-surface-container text-body-sm font-body-sm font-medium transition-colors" title="Revert filter set">
+                Reset Filters
+              </button>
+<button class="px-3 py-1.5 rounded-lg bg-surface-container-lowest border border-outline-variant text-primary font-semibold text-body-sm font-body-sm hover:bg-surface-container flex items-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-[16px]">file_download</span>
+<span>Export CSV</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Strict API Limitation Disclaimer Bar -->
+<div class="flex items-center gap-1.5 text-xs text-outline font-label-code pt-1">
+<span class="material-symbols-outlined text-[14px] text-outline">info</span>
+<span>Notice: Shares, impressions, and demographic reach are YouTube Data API v3 restricted and intentionally omitted from this dataset.</span>
+</div>
+</section>
+<!-- 2. KEY METRIC SUMMARY TILES (4 Cards in a 4-Column Grid) -->
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Tile 1 -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-4 flex flex-col justify-between">
+<div class="flex items-center justify-between text-outline">
+<span class="text-label-badge font-label-badge uppercase tracking-wider text-on-surface-variant">Analyzed Videos</span>
+<span class="material-symbols-outlined text-outline">smart_display</span>
+</div>
+<div class="my-2">
+<div class="text-headline-xl font-headline-xl text-on-surface tabular-nums">30</div>
+</div>
+<div class="text-body-sm font-body-sm text-outline border-t border-outline-variant pt-2 mt-1">
+<span class="font-semibold text-primary">10 Jazz</span> · 10 Zong · 10 Ufone (Balanced)
+          </div>
+</div>
+<!-- Tile 2 -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-4 flex flex-col justify-between">
+<div class="flex items-center justify-between text-outline">
+<span class="text-label-badge font-label-badge uppercase tracking-wider text-on-surface-variant">Sampled Public Comments</span>
+<span class="material-symbols-outlined text-outline">comment</span>
+</div>
+<div class="my-2">
+<div class="text-headline-xl font-headline-xl text-on-surface tabular-nums">279</div>
+</div>
+<div class="text-body-sm font-body-sm text-outline border-t border-outline-variant pt-2 mt-1">
+            Top-level public comments across corpus
+          </div>
+</div>
+<!-- Tile 3 -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-4 flex flex-col justify-between">
+<div class="flex items-center justify-between text-outline">
+<span class="text-label-badge font-label-badge uppercase tracking-wider text-on-surface-variant">Official Brand Channels</span>
+<span class="material-symbols-outlined text-outline">verified</span>
+</div>
+<div class="my-2">
+<div class="text-headline-xl font-headline-xl text-on-surface tabular-nums">3</div>
+</div>
+<div class="text-body-sm font-body-sm text-outline border-t border-outline-variant pt-2 mt-1">
+            Jazz Digital, Zong 4G, Ufone 4G
+          </div>
+</div>
+<!-- Tile 4 -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-4 flex flex-col justify-between">
+<div class="flex items-center justify-between text-outline">
+<span class="text-label-badge font-label-badge uppercase tracking-wider text-on-surface-variant">Selected-Metric Coverage</span>
+<span class="material-symbols-outlined text-primary">check_circle</span>
+</div>
+<div class="my-2 flex items-baseline gap-2">
+<div class="text-headline-xl font-headline-xl text-primary tabular-nums">100%</div>
+<span class="text-label-code text-xs text-secondary font-semibold">Complete</span>
+</div>
+<div class="text-body-sm font-body-sm text-outline border-t border-outline-variant pt-2 mt-1">
+            Views, likes & comment totals fully observed (30/30)
+          </div>
+</div>
+</section>
+<!-- 3. BRAND COMPARISON & OBSERVATIONAL DISTRIBUTION (Bento style 8/4 split) -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Main Plot Panel (8 cols) -->
+<div class="lg:col-span-8 bg-surface-container-lowest rounded-xl border border-outline-variant p-5 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-1">
+<h2 class="text-headline-md font-headline-md text-on-surface font-semibold">
+                Observed Brand Corpus Distribution & Metrics
+              </h2>
+<span class="text-label-code text-xs px-2 py-0.5 rounded bg-surface-container text-on-surface-variant">
+                N = 30 Videos
+              </span>
+</div>
+<p class="text-body-sm font-body-sm text-outline mb-6">
+              Measured brand comparison loads from the dataset. Balanced quotas prevent brand volume bias in aggregate cross-case comparison.
+            </p>
+<!-- Plotly-style empirical visual bars -->
+<div class="space-y-4 my-2">
+<!-- Jazz Bar Group -->
+<div>
+<div class="flex justify-between items-center text-body-sm font-body-sm mb-1.5">
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded text-label-badge font-label-badge bg-surface-container text-on-surface">Jazz Digital</span>
+<span class="text-outline text-xs">Official Ingest</span>
+</div>
+<span class="font-label-code text-xs font-semibold text-on-surface">10 videos (33.3%)</span>
+</div>
+<div class="w-full bg-surface-container rounded h-7 flex items-center px-2">
+<div class="bg-primary-container h-4 rounded text-[10px] text-on-primary font-label-code font-bold flex items-center px-2" style="width: 100%;">
+                    10 Videos Loaded
+                  </div>
+</div>
+</div>
+<!-- Zong Bar Group -->
+<div>
+<div class="flex justify-between items-center text-body-sm font-body-sm mb-1.5">
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded text-label-badge font-label-badge bg-surface-container text-on-surface">Zong 4G</span>
+<span class="text-outline text-xs">Official Ingest</span>
+</div>
+<span class="font-label-code text-xs font-semibold text-on-surface">10 videos (33.3%)</span>
+</div>
+<div class="w-full bg-surface-container rounded h-7 flex items-center px-2">
+<div class="bg-primary-container h-4 rounded text-[10px] text-on-primary font-label-code font-bold flex items-center px-2" style="width: 100%;">
+                    10 Videos Loaded
+                  </div>
+</div>
+</div>
+<!-- Ufone Bar Group -->
+<div>
+<div class="flex justify-between items-center text-body-sm font-body-sm mb-1.5">
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded text-label-badge font-label-badge bg-surface-container text-on-surface">Ufone 4G</span>
+<span class="text-outline text-xs">Official Ingest</span>
+</div>
+<span class="font-label-code text-xs font-semibold text-on-surface">10 videos (33.3%)</span>
+</div>
+<div class="w-full bg-surface-container rounded h-7 flex items-center px-2">
+<div class="bg-primary-container h-4 rounded text-[10px] text-on-primary font-label-code font-bold flex items-center px-2" style="width: 100%;">
+                    10 Videos Loaded
+                  </div>
+</div>
+</div>
+</div>
+</div>
+<!-- Methodological Note Box (Clinical Rigor) -->
+<div class="mt-6 p-3 bg-surface-container-low rounded-lg border border-outline-variant flex items-start gap-2.5">
+<span class="material-symbols-outlined text-outline text-[18px] shrink-0 mt-0.5">verified_user</span>
+<div class="text-body-sm font-body-sm text-on-surface-variant">
+<span class="font-semibold text-on-surface">Methodological note:</span> Videos have different ages and natural algorithm shelf-lives. These are observed associations, not proof of algorithmic causality or organic reach differences.
+            </div>
+</div>
+</div>
+<!-- Metric Summary & Distribution Stat Deck (4 cols) -->
+<div class="lg:col-span-4 bg-surface-container-low rounded-xl border border-outline-variant p-5 flex flex-col justify-between">
+<div>
+<h3 class="text-headline-md font-headline-md font-semibold text-on-surface mb-1">
+              Corpus Stratification
+            </h3>
+<p class="text-body-sm font-body-sm text-outline mb-4">
+              Per-brand telemetry integrity checks.
+            </p>
+<div class="space-y-3 font-label-code text-xs">
+<div class="p-3 bg-surface-container-lowest rounded-lg border border-outline-variant flex flex-col gap-1">
+<div class="flex justify-between items-center font-semibold text-on-surface">
+<span class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+                    Jazz Digital
+                  </span>
+<span>10 / 10 Videos</span>
+</div>
+<div class="text-outline text-[11px] flex justify-between">
+<span>Tracked metrics:</span>
+<span class="text-primary font-medium">Views, Likes, Comments</span>
+</div>
+</div>
+<div class="p-3 bg-surface-container-lowest rounded-lg border border-outline-variant flex flex-col gap-1">
+<div class="flex justify-between items-center font-semibold text-on-surface">
+<span class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+                    Zong 4G
+                  </span>
+<span>10 / 10 Videos</span>
+</div>
+<div class="text-outline text-[11px] flex justify-between">
+<span>Tracked metrics:</span>
+<span class="text-primary font-medium">Views, Likes, Comments</span>
+</div>
+</div>
+<div class="p-3 bg-surface-container-lowest rounded-lg border border-outline-variant flex flex-col gap-1">
+<div class="flex justify-between items-center font-semibold text-on-surface">
+<span class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+                    Ufone 4G
+                  </span>
+<span>10 / 10 Videos</span>
+</div>
+<div class="text-outline text-[11px] flex justify-between">
+<span>Tracked metrics:</span>
+<span class="text-primary font-medium">Views, Likes, Comments</span>
+</div>
+</div>
+</div>
+</div>
+<div class="pt-4 border-t border-outline-variant text-[0.75rem] text-outline font-label-code">
+            Engagement medians and distribution quartiles compute in the Content and Data & methods modules.
+          </div>
+</div>
+</section>
+<!-- 4. REPRESENTATIVE OBSERVED VIDEO LOG TABLE (Streamlit Dataframe Paradigm) -->
+<section class="bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden">
+<div class="p-5 border-b border-outline-variant flex flex-wrap items-center justify-between gap-3 bg-surface-container-lowest">
+<div>
+<h2 class="text-headline-md font-headline-md font-semibold text-on-surface">
+              Recent & Representative Observed Ingests
+            </h2>
+<p class="text-body-sm font-body-sm text-outline">
+              Verifiable records from the active 30-video sample (Ordered by observed ingestion date)
+            </p>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-label-code text-xs text-outline">Showing 4 of 30 loaded records</span>
+<button class="px-2.5 py-1 text-xs font-label-code border border-outline-variant rounded bg-surface-container-low hover:bg-surface-container transition-colors">
+              Filter Rows
+            </button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant text-label-badge font-label-badge text-on-surface-variant uppercase tracking-wider">
+<th class="py-3 px-4">Video Title</th>
+<th class="py-3 px-4">Channel / Brand</th>
+<th class="py-3 px-4">Published Date</th>
+<th class="py-3 px-4 text-right">Observed Views</th>
+<th class="py-3 px-4 text-right">Observed Likes</th>
+<th class="py-3 px-4 text-right">Sampled Comments</th>
+<th class="py-3 px-4 text-center">Data Completeness</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant text-body-sm font-body-sm">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3 px-4 font-medium text-on-surface max-w-xs truncate" title="Jazz 4G Super Duper Monthly Bundle Promo">
+                  Jazz 4G Super Duper Monthly Bundle Promo
+                </td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-label-badge font-label-badge bg-surface-container text-on-surface">
+                    Jazz
+                  </span>
+</td>
+<td class="py-3 px-4 font-label-code text-xs text-outline tabular-nums">
+                  May 14, 2026
+                </td>
+<td class="py-3 px-4 font-label-code text-xs text-right font-medium text-on-surface tabular-nums">
+                  412,850
+                </td>
+<td class="py-3 px-4 font-label-code text-xs text-right text-outline tabular-nums">
+                  14,200
+                </td>
+<td class="py-3 px-4 font-label-code text-xs text-right text-outline tabular-nums">
+                  18
+                </td>
+<td class="py-3 px-4 text-center">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container text-label-badge font-label-badge font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+                    100% Observed
+                  </span>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low transition-colors bg-surface-bright">
+<td class="py-3 px-4 font-medium text-on-surface max-w-xs truncate" title="Zong Digital Youth Esports Championship Cup">
+                  Zong Digital Youth Esports Championship Cup
+                </td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-label-badge font-label-badge bg-surface-container text-on-surface">
+                    Zong
+                  </span>
+</td>
+<td class="py-3 px-4 font-label-code text-xs text-outline tabular-nums">
+                  Jun 02, 2026
+                </td>
+<td class="py-3 px-4 font-label-code text-xs text-right font-medium text-on-surface tabular-nums">
+                  289,120
+                </td>
+<td class="py-3 px-4 font-label-code text-xs text-right text-outline tabular-nums">
+                  8,950
+                </td>
+<td class="py-3 px-4 font-label-code text-xs text-right text-outline tabular-nums">
+                  12
+                </td>
+<td class="py-3 px-4 text-center">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container text-label-badge font-label-badge font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+                    100% Observed
+                  </span>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3 px-4 font-medium text-on-surface max-w-xs truncate" title="Ufone 4G Sab Se Behtar Package Launch">
+                  Ufone 4G Sab Se Behtar Package Launch
+                </td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-label-badge font-label-badge bg-surface-container text-on-surface">
+                    Ufone
+                  </span>
+</td>
+<td class="py-3 px-4 font-label-code text-xs text-outline tabular-nums">
+                  Aug 19, 2026
+                </td>
+<td class="py-3 px-4 font-label-code text-xs text-right font-medium text-on-surface tabular-nums">
+                  534,000
+                </td>
+<td class="py-3 px-4 font-label-code text-xs text-right text-outline tabular-nums">
+                  19,400
+                </td>
+<td class="py-3 px-4 font-label-code text-xs text-right text-outline tabular-nums">
+                  24
+                </td>
+<td class="py-3 px-4 text-center">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container text-label-badge font-label-badge font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+                    100% Observed
+                  </span>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-low transition-colors bg-surface-bright">
+<td class="py-3 px-4 font-medium text-on-surface max-w-xs truncate" title="Jazz Cash Financial Inclusion Series Ep 02">
+                  Jazz Cash Financial Inclusion Series Ep 02
+                </td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-label-badge font-label-badge bg-surface-container text-on-surface">
+                    Jazz
+                  </span>
+</td>
+<td class="py-3 px-4 font-label-code text-xs text-outline tabular-nums">
+                  Sep 04, 2026
+                </td>
+<td class="py-3 px-4 font-label-code text-xs text-right font-medium text-on-surface tabular-nums">
+                  198,400
+                </td>
+<td class="py-3 px-4 font-label-code text-xs text-right text-outline tabular-nums">
+                  6,120
+                </td>
+<td class="py-3 px-4 font-label-code text-xs text-right text-outline tabular-nums">
+                  15
+                </td>
+<td class="py-3 px-4 text-center">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container text-label-badge font-label-badge font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+                    100% Observed
+                  </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Footer Pagination / Integrity Note -->
+<div class="px-5 py-3 border-t border-outline-variant bg-surface-container-low flex items-center justify-between text-xs text-outline font-label-code">
+<span>Integrity Verification: SHA-256 Digest Confirmed (All 30 raw payloads indexed)</span>
+<a class="text-primary font-semibold hover:underline flex items-center gap-1" href="#content">
+            View full 30 records in Content Module
+            <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</a>
+</div>
+</section>
+<!-- 5. 'NEXT RESEARCH STEP' GUIDANCE CARD -->
+<section class="bg-surface-container-low rounded-xl border border-outline-variant p-5 mb-6">
+<div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+<div class="flex-1 space-y-2">
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center justify-center w-5 h-5 rounded bg-primary text-on-primary text-xs">
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</span>
+<h3 class="text-headline-md font-headline-md font-semibold text-on-surface">
+                Next Research Step: Qualitative Content Coding
+              </h3>
+</div>
+<p class="text-body-md font-body-md text-on-surface-variant max-w-3xl">
+              The initial corpus ingest is complete. To evaluate brand narrative strategy, proceed to the Content module to review thematic category tags, caption tone vs comment sentiment alignment, and cue classification.
+            </p>
+<div class="inline-flex items-center gap-2 px-3 py-1 bg-surface-container-lowest border border-outline-variant rounded-md text-xs font-label-code text-outline">
+<span class="material-symbols-outlined text-[14px] text-primary">priority_high</span>
+<span>Notice: 23 of 279 comments match rule-based cue lexicons; 256 remain unclassified until manual coding validation in the Comments workspace.</span>
+</div>
+</div>
+<!-- CTAs -->
+<div class="flex flex-col sm:flex-row items-stretch md:items-center gap-2 shrink-0 w-full md:w-auto">
+<button class="px-4 py-2.5 rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface hover:bg-surface-container text-body-sm font-body-sm font-medium transition-colors">
+              Inspect Raw Schema in Data & methods
+            </button>
+<a class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-primary-container text-on-primary text-body-sm font-body-sm font-semibold hover:bg-secondary transition-colors" href="#content">
+<span>Proceed to Content Review</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+</div>
+</section>
+</main>
+</div>
+</body></html>

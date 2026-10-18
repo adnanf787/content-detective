@@ -1,0 +1,62 @@
+industry: Pakistan telecom
+study:
+  publication_start: '2025-10-01'
+  publication_end: '2026-09-30'
+  timezone: Asia/Karachi
+  videos_per_brand: 10
+  comments_per_video: 30
+  minimum_post_age_days: 7
+  selection: newest eligible published videos first; not a representative or viral-only
+    sample
+  window_decision: User approved a common 12-month window on 2026-10-18 because Zong
+    had only 7 eligible uploads in April–September 2026. Post-age differences must
+    be reported.
+brands:
+- brand_id: jazz
+  brand_name: Jazz
+  country_relevance_note: Pakistani telecom brand; viewer nationality is unknown
+  youtube:
+    lookup:
+      forUsername: MobilinkOfficialPK
+    channel_id: UCaPhZAbouhRyq_w59iA24qQ
+    verified_official: true
+    verification_url: https://jazz.com.pk/
+    verification_link: https://www.youtube.com/user/MobilinkOfficialPK
+    verification_method: Exact official corporate homepage hyperlink, resolved by
+      YouTube channels.list
+    channel_title: Jazz
+    handle: '@jazzpk'
+    verified_at_utc: '2026-10-18T07:06:11.321811+00:00'
+    verification_raw_record: data/raw/verify_2026-10-18T070609107316+0000/channels_99630fc7d084960c47206de5.json
+- brand_id: zong
+  brand_name: Zong
+  country_relevance_note: Pakistani telecom brand; viewer nationality is unknown
+  youtube:
+    lookup:
+      id: UCpgGe1f7cK-OSGtNcTBepCA
+    channel_id: UCpgGe1f7cK-OSGtNcTBepCA
+    verified_official: true
+    verification_url: https://www.zong.com.pk/
+    verification_link: https://www.youtube.com/channel/UCpgGe1f7cK-OSGtNcTBepCA
+    verification_method: Exact official corporate homepage hyperlink, resolved by
+      YouTube channels.list
+    channel_title: Zong
+    handle: '@zongofficial'
+    verified_at_utc: '2026-10-18T07:06:12.650795+00:00'
+    verification_raw_record: data/raw/verify_2026-10-18T070609107316+0000/channels_3286e0109d80e42ce12d2b69.json
+- brand_id: ufone
+  brand_name: Ufone
+  country_relevance_note: Pakistani telecom brand; viewer nationality is unknown
+  youtube:
+    lookup:
+      id: UC84vSZJJYMaKr7mSkomy_Sg
+    channel_id: UC84vSZJJYMaKr7mSkomy_Sg
+    verified_official: true
+    verification_url: https://www.ufone.com/
+    verification_link: https://www.youtube.com/channel/UC84vSZJJYMaKr7mSkomy_Sg
+    verification_method: Exact official corporate homepage hyperlink, resolved by
+      YouTube channels.list
+    channel_title: Ufone 5G
+    handle: '@ufonepak'
+    verified_at_utc: '2026-10-18T07:06:14.027997+00:00'
+    verification_raw_record: data/raw/verify_2026-10-18T070609107316+0000/channels_aa8d0c9e383d5bdaed275b3b.json
