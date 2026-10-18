@@ -1,0 +1,27 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "services": {
+    "dashboard": {
+      "root": "web",
+      "framework": "nextjs",
+      "installCommand": "npm ci",
+      "buildCommand": "npm run build"
+    },
+    "research": {
+      "root": ".",
+      "framework": "fastapi",
+      "entrypoint": "api.index:app",
+      "functions": {
+        "api/index.py": {
+          "maxDuration": 300,
+          "excludeFiles": "{web/**,.venv/**,notebooks/**,tests/**,data/raw/**,data/private/**,data/*.sqlite*,.env,docs/stitch/**}",
+          "includeFiles": "{src/**,data/processed/youtube_posts.csv,data/processed/youtube_comments.csv,data/processed/youtube_collection_report.json,config/**,docs/FEATURE_GUIDE.md}"
+        }
+      }
+    }
+  },
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": { "service": "research" } },
+    { "source": "/(.*)", "destination": { "service": "dashboard" } }
+  ]
+}

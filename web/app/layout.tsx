@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
-import './globals.css';
+import './dashboard.css';
 
 export const metadata: Metadata = {
-  title: 'ReelScope — Instagram content research',
-  description: 'Look closer at your Instagram videos. Local media inspection, creator insights, and source-backed claim research. No invented scores.',
+  title: 'Content Detective — Pakistan Telecom Research',
+  description: 'Explore verified YouTube observations, review content and public comments, compare engagement, and export the evidence behind your next content experiment.',
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

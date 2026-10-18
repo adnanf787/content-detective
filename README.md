@@ -2,7 +2,11 @@
 
 A student digital-marketing investigation: **What type of social-media content gets Pakistani audiences to engage?**
 
-The Python/Streamlit assignment is the main project. The earlier video/fact-checking experiment in `web/` is preserved separately. Current work is **YouTube only**. Phase 3 adds shared analysis, evidence exports, and a simplified five-section dashboard. Instagram is deferred; its offline CSV validator remains in the codebase.
+The current project has a Python/Streamlit assignment dashboard (`app.py`) and a matching Next.js web dashboard (`web/`) for Vercel. Both use the same Python analysis through `src/`; the web API entry point is `api/index.py`. Current work is **YouTube only**, with shared analysis, evidence exports, and a five-section research workflow. Instagram is deferred; its offline CSV validator remains in the codebase. The earlier ReelScope interface is no longer the web homepage.
+
+**Current web interface:** [run the Next.js dashboard](web/README.md) · [deploy on Vercel](docs/DEPLOYMENT.md) · [feature guide](docs/FEATURE_GUIDE.md).
+
+![Current Content Detective web dashboard](docs/vercel-dashboard-preview.jpg)
 
 ## Real collection completed — October 18, 2026
 
@@ -41,9 +45,9 @@ Open the local URL, usually http://127.0.0.1:8501. The validated saved YouTube p
 
 ## Publish the current dashboard
 
-Deploy this repository's **`app.py`** on Streamlit Community Cloud, using branch **`main`** and Python **3.12**. The root `requirements.txt` supplies the dependencies, and the included public pilot loads without an API key. See [deployment instructions](docs/DEPLOYMENT.md).
+For Vercel, deploy the **repository root** on branch **`main`**, with the **Services** framework preset and root `vercel.json`. This builds the current Next.js interface and shared Python API together. The included public pilot loads without an API key. See [deployment instructions](docs/DEPLOYMENT.md).
 
-The Vercel project rooted at **`web/`** serves the earlier ReelScope app. Its Next.js build does not run the Python dashboard. Pushing dashboard changes to GitHub or rebuilding `web/` does not replace ReelScope with this dashboard.
+An existing Vercel project must have its Root Directory changed from `web` to the repository root so both services deploy. After that one-time configuration, pushes to `main` update the dashboard through Vercel's Git integration. Root `app.py` remains available for local Streamlit use or optional Community Cloud hosting.
 
 ## Reproduce acquisition
 

@@ -1,34 +1,49 @@
-# Deploy the current YouTube dashboard
+# Deploy Content Detective on Vercel
 
-The current application is Streamlit. `app.py` loads `src/dashboard.py` and `assets/dashboard.css`. The separate `web/` directory is the earlier ReelScope Next.js app, deployed on Vercel. Rebuilding that project does not publish the Streamlit dashboard.
+The current hosted application uses a Next.js interface in `web/` and a stateless FastAPI service in `api/index.py`. The API reuses the same `src/` cleaning, measurement, NLP cue, recommendation, and export code as the Streamlit assignment. `app.py` remains a local Streamlit entry point.
 
-## Streamlit Community Cloud
+## Existing Vercel project
 
-1. Open https://share.streamlit.io/ and sign in with the GitHub account that can access `adnanf787/content-detective`. Complete any account terms or repository-access prompts yourself.
-2. Choose **Create app**, then deploy from GitHub.
-3. Set repository to **adnanf787/content-detective**, branch to **main**, and main file path to **app.py**. Do not select `web/`.
-4. In advanced settings, select **Python 3.12**. The repository root's `requirements.txt` is used automatically.
-5. Deploy and wait for the app to start. The deployed URL will be a Streamlit app URL, separate from the existing Vercel address.
+1. Sign in to the Vercel account that owns the site you want to replace (the supplied site was `web-adnan787.vercel.app`). Verify the project and domain before changing it; the old local CLI link names a separate project, `reelscope`.
+2. Connect **adnanf787/content-detective**, production branch **main**.
+3. In Build and Deployment settings, set **Root Directory** to the repository root (clear `web`). Select **Services** as the framework preset. Remove previous project-level Next.js build/install/output overrides; each service declares its own commands in the root `vercel.json`.
+4. Use Node.js **24** for the frontend. The Python backend uses **3.12**, declared in `.python-version` and supported by `pyproject.toml`.
+5. Deploy the latest `main` commit. The root configuration builds the two services together and routes requests under one domain.
 
-No secrets are needed to view or analyze the included snapshot. Fresh YouTube collection is optional; if enabled, add `YOUTUBE_API_KEY` through the app's private Streamlit secrets settings. Never commit `.env` or a secrets file. Files written during cloud collection are not durable storage; download results before restarting the app.
+No secrets are required to browse the saved pilot. The new homepage is **Content Detective — Pakistan Telecom Research**, with Overview, Content, Comments, Recommendations, and Data & methods. It should not show ReelScope or an Instagram upload screen.
 
-## Included data
+Subsequent pushes to `main` trigger Vercel deployments when the Git integration is connected. GitHub contains the complete source, not a running application preview.
 
-Git includes only these three processed files:
+## Included snapshot
+
+Git includes only these three processed public-pilot files:
 
 - `data/processed/youtube_posts.csv`: 30 public videos, ten per verified brand.
-- `data/processed/youtube_comments.csv`: 279 sampled public comments, without commenter profile fields.
-- `data/processed/youtube_collection_report.json`: snapshot timestamps, validation, counts, and limitations.
+- `data/processed/youtube_comments.csv`: 279 sampled public comments, without author profile fields.
+- `data/processed/youtube_collection_report.json`: observation times, validation, counts, and limitations.
 
-The snapshot was observed on October 18, 2026. It is saved research data, not continuously refreshed measurements. The app validates the CSVs and loads them automatically. Raw-response lineage paths refer to local acquisition receipts, which are not bundled. Credentials, raw responses, the SQLite database, and generated analysis outputs remain excluded from Git.
+The bundled observations were collected on October 18, 2026. They do not continuously refresh. Credentials, raw responses, the local SQLite database, and other generated outputs stay excluded. Raw-response lineage paths identify local receipts but do not bundle those receipts in the hosted app.
 
-## Check after deployment
+## Workspace and collection behavior
 
-- The browser title identifies **PakTelco Analytical Observational Workbench · Content Detective**.
-- The navigation has **Overview**, **Content**, **Comments**, **Recommendations**, and **Data & methods**.
-- The unfiltered overview shows **30 videos**, **279 sampled comments**, and **3 brands**.
-- Open all five sections, try a brand filter, and use **Export research** to download the filtered evidence.
+Imports, label edits, and fresh collections live in each browser's current workspace. The browser sends that workspace to the API for shared analysis; the API does not save private uploads or overwrite the bundled dataset. Visitors should export their work before closing or reloading.
 
-Later pushes to `main` update the Streamlit app connected to that branch. Keep Vercel only if the earlier ReelScope app is still useful; its address continues to serve that separate application.
+Hosted requests are capped at 3.5 MB; CSV imports at 2.5 MB and 5,000 post rows. The complete serialized workspace must fit the request cap. The web backend is stateless and does not rely on a local database surviving a server restart.
 
-Official instructions: https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/deploy
+Fresh collection requires a visitor-supplied YouTube Data API key. It passes through the app to Google's official endpoint and is not saved. The backend never automatically exposes an owner's environment key to anonymous visitors. A temporary directory contains acquisition receipts during collection and is removed afterward; download the resulting evidence. Collection uses the visitor's API quota and may hit the function time limit or provider quota. The saved pilot remains available if collection fails.
+
+## Verify after deployment
+
+1. `/api/health` returns `application=content-detective` and `version=youtube-dashboard-v1`.
+2. The unfiltered Overview shows **30 videos**, **279 sampled comments**, **3 brands**, and **100% measure coverage**.
+3. Filter to Jazz: the workspace shows **10 videos** and **31 sampled comments**.
+4. Open all five sections; search a source video and a sampled comment.
+5. Download the evidence ZIP and verify it contains the active filters and only the selected posts' linked comments.
+
+The root API and frontend are tested locally. A successful local build does not confirm a production deployment; verify Vercel's deployment result and the live URL.
+
+## Optional Streamlit hosting
+
+If a Streamlit URL is desired separately, Community Cloud can still deploy root `app.py` on branch `main` with root `requirements.txt`. This is an alternative presentation of the assignment, not required for the Vercel deployment.
+
+Official Vercel references: [Services](https://vercel.com/docs/services) · [configuration](https://vercel.com/docs/services/config-reference) · [Python runtime](https://vercel.com/docs/functions/runtimes/python).
